@@ -5,7 +5,7 @@ class estado(object):
 		self.idEstado = idEstado
 		self.TransicionesSalientes = []
 		self.estadoFinal = False
-		
+
 	def añadirTransicion(self,simbolo,idEstadoDestino):
 		trans = transcion(simbolo,idEstadoDestino)
 		pass
