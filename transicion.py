@@ -2,7 +2,7 @@
 
  class transicion(object):
  	
- 	def __init__(self,simbolo):
+ 	def __init__(self,simbolo,idEstadoDestino):
  		self.simbolo = simbolo
- 		self.
+ 		self.idEstadoDestino = idEstadoDestino
  		
