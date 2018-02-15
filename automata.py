@@ -8,30 +8,36 @@ class Automata(object):
 		self.estados = {}
         self.estadoInicial = estado
         self.alphabeto = alfabeto
+        automataBasico(self)
+        
+    def automataBasico(self,s,s1):
 
-    def unir():
         pass
 
-    def concatenar():
+    def unir(self):
         pass
 
-    def cerradura_kleene():
+    def concatenar(self):
         pass
 
-    def cerradura_positiva():
+    def cerraduraKleene(self):
+
         pass
 
-    def ir_a():
+    def cerraduraPositiva(self):
         pass
 
-    def mover_C():
+    def irA(self):
         pass
 
-    def mover():
+    def moverC(self):
         pass
 
-    def cerradura_epsilon_C():
+    def mover(self):
         pass
 
-    def cerradura_epsilon():
+    def cerraduraEpsilonC(self):
+        pass
+
+    def cerraduraEpsilon(self):
         pass
