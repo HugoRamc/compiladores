@@ -8,7 +8,8 @@ class estado(object):
 
 	def addTransicion(self,simbolo,idEstadoDestino):
 		trans = transcion(simbolo,idEstadoDestino)
-		pass
+		self.transicionesSalientes[self.idEstado] = trans
+		
 
 	def enableEstadoFinal(self):
 		self.estadoFinal = True
