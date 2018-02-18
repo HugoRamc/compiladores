@@ -1,37 +1,26 @@
-from estado import estado
-from transicion import transicion
+from estado import *
+from transicion import *
 
-class Automata(object):
+class automata(object):
 
-    def __init__(self,alphabeto):
+	##al crear un objeto de la clase automata se crea un autómata básico con un caracter, dos estados y una transicion
+	def __init__(self,alphabeto,idEstadoInicial):
 		self.estadosDeAceptacion = {}
 		self.estados = {}
-        self.estadoInicial = estado
-        self.alphabeto = alfabeto
+		self.estadoInicial = IntVar()
+		self.alphabeto = [alphabeto]
 
-    def unir():
-        pass
 
-    def concatenar():
-        pass
+		edoInicial = estado(idEstadoInicial)
+		edoFinal = estado(idEstadoInicial+1)
+		edoFinal.enableFinalState()
+		edoInicial.addTransicion(alphabeto,idEstadoInicial+1)
 
-    def cerradura_kleene():
-        pass
+		self.estadosDeAceptacion[idEstadoInicial+1] = edoFinal
+		self.estados[idEstadoInicial] = edoInicial
+		self.estados[idEstadoInicial+1] = edoFinal
+		self.estadoInicial = idEstadoInicial
 
-    def cerradura_positiva():
-        pass
 
-    def ir_a():
-        pass
 
-    def mover_C():
-        pass
-
-    def mover():
-        pass
-
-    def cerradura_epsilon_C():
-        pass
-
-    def cerradura_epsilon():
-        pass
+	
