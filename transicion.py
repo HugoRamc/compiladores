@@ -1,5 +1,5 @@
-class transicion(object):
-	
+class Transicion(object):
+
 	def __init__(self,minsimbolo,maxSimbolo,idEstadoDestino):
 		self.minSimbolo = minsimbolo
 		self.maxSimbolo = maxSimbolo
@@ -9,4 +9,3 @@ class transicion(object):
 		self.minSimbolo = simbolo
 		self.maxSimbolo = simbolo
 		self.idEstadoDestino = idEstadoDestino
-		

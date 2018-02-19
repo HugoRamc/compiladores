@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from automata import *
 
-class interfaz(object):
+class Interfaz(object):
     """docstring for interfaz"""
     def __init__(self):
         self.automatas = []
@@ -25,42 +25,6 @@ class interfaz(object):
             Buttons[i].place(x = 30, y = 39 + i*30)
         f.mainloop()
 
-    def automataBasico(self,simbolo):
-        nautomata = automata(simbolo,self.idEstadoAcum)
-        self.automatas.append(nautomata)
-
-    def unir(self):
-        pass
-
-    def concatenar(self):
-        pass
-
-    def cerradura_kleene(self):
-        pass
-
-    def cerradura_positiva(self):
-        pass
-
-    def ir_a(self):
-        pass
-
-    def mover_C(self):
-        pass
-
-    def mover(self):
-        pass
-
-    def cerradura_epsilon_C(self):
-        pass
-
-    def cerradura_epsilon(self,estado):
-        conjEstados = []
-        pilaEstados = []
-    
-        pilaEstados.append(estado)
-
-        while len(pilaEstados)==0:
-            pass
-
-
+#Automata = automata(va el iterador de los estados,string de alfabeto) para crear nu automata se usa esta notaciòn,
+#La clase automata ya cre automaticamente un automata base
 obj = interfaz()

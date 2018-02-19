@@ -1,10 +1,14 @@
 from transicion import *
-class estado(object):
-	"""docstring for estado"""
+
+class Estado:
+	
+	idEstadoGlobal = 0
 	def __init__(self,idEstado):
 		self.idEstado = idEstado
 		self.TransicionesSalientes = []
 		self.estadoAceptacion = False
+		estado.idEstadoGlobal += 1
+		self.idEstadoGeneral = estado.idEstadoGlobal
 
 	def addTransicion(self,simbolo,idEstadoDestino):
 		trans = transcion(simbolo,idEstadoDestino)
@@ -16,4 +20,3 @@ class estado(object):
 
 	def disableFinalState(self):
 		self.estadoFinal = False
-
