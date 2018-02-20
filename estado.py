@@ -1,18 +1,17 @@
 from transicion import *
 
 class Estado:
-	
+
 	idEstadoGlobal = 0
-	def __init__(self,idEstado):
-		self.idEstado = idEstado
-		self.TransicionesSalientes = []
+	def __init__(self):
+		self.transicionesSalientes = {}
 		self.estadoAceptacion = False
-		estado.idEstadoGlobal += 1
-		self.idEstadoGeneral = estado.idEstadoGlobal
+		Estado.idEstadoGlobal += 1
+		self.idEstadoGeneral = Estado.idEstadoGlobal
 
 	def addTransicion(self,simbolo,idEstadoDestino):
-		trans = transcion(simbolo,idEstadoDestino)
-		self.transicionesSalientes[self.idEstado] = trans
+		trans = Transicion(simbolo,idEstadoDestino)
+		self.transicionesSalientes[self.idEstadoGeneral] = trans
 
 
 	def enableFinalState(self):
