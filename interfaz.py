@@ -43,7 +43,7 @@ def update_AFN(f,laut,m,accion):
         ##implementacion
     if m == "Operación ?":
         automata = accion.get()
-        pila_automatas[int(automata)].cerraduta_interrogacion()
+        pila_automatas[int(automata)].cerradura_interrogacion()
         ##implementacion
 
     laut.configure(text=str(int(laut.cget("text"))+1))

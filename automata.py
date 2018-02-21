@@ -95,7 +95,7 @@ class Automata:
 		self.estados[nuevoFin.idEstadoGeneral] = nuevoFin
 		self.estadoInicial = nuevoIni
 
-	def cerraduta_interrogacion(self):
+	def cerradura_interrogacion(self):
 		#Luis
 		pass
 
