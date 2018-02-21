@@ -79,7 +79,21 @@ class Automata:
 
 	def cerradura_positiva(self):
 	#Luis
-		pass
+		nuevoIni = Estado()
+		nuevoFin = Estado()
+		nuevoIni.addTransicion(["Ǝ"],self.estadoInicial)
+		
+		for idEstado in self.estadosDeAceptacion:
+			self.estadosDeAceptacion[idEstado].addTransicion(["Ǝ"],nuevoFin)
+			self.estadosDeAceptacion[idEstado].addTransicion(["Ǝ"],self.estadoInicial)
+			self.estadosDeAceptacion[idEstado].disableFinalState()
+
+		nuevoFin.enableFinalState()
+		self.estadosDeAceptacion.clear()
+		self.estadosDeAceptacion[nuevoFin.idEstadoGeneral] = nuevoFin
+		self.estados[nuevoIni.idEstadoGeneral] = nuevoIni
+		self.estados[nuevoFin.idEstadoGeneral] = nuevoFin
+		self.estadoInicial = nuevoIni
 
 	def cerraduta_interrogacion(self):
 		#Luis
