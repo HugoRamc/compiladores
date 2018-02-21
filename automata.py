@@ -83,19 +83,32 @@ class Automata:
 	#Oscar
 		return moverEstados
 
-	def cerradura_epsilon_C(self):
+	def cerradura_epsilon_C(self,estados):#esta cerradura epsilon es para el conjunto de estados
 	#Hugo
-		pass
+		conjSalida = []
+		for estado in estados:
+			aux = set(conjSalida) | set(self.cerradura_epsilon(estado))
+			conjSalida = list(aux)
+		return conjSalida
 
-	def cerradura_epsilon(self,estado):
+	def cerradura_epsilon(self,estado):#esta cerradura epsilon es para solo un estado
 	#Hugo
-		conjEstados = []
+
+		conjSalida = []
 		pilaEstados = []
 
 		pilaEstados.append(estado)
 
-		while len(pilaEstados)==0:
-			pass
+		for x in pilaEstados:
+			r = x
+			if est in self.estados:
+				conjSalida.append(r)
+				for t in r.transicionesSalientes:
+					if(t.simbolos = Automata.epsilon):
+						pilaEstados.append(estados[t.idEstadoDestino])
+
+		return conjSalida
+
 
 	def epsilon():
 		pass
