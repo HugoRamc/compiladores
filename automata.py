@@ -97,12 +97,30 @@ class Automata:
 
 	def cerradura_interrogacion(self):
 		#Luis
-		pass
+		nuevoIni = Estado()
+		nuevoFin = Estado()
+		nuevoIni.addTransicion(["Ǝ"],self.estadoInicial)
+		nuevoIni.addTransicion(["Ǝ"],nuevoFin)
+		for e in self.estadosDeAceptacion:
+			self.estadosDeAceptacion[e].addTransicion(["Ǝ"],nuevoFin)
+			self.estadosDeAceptacion[e].disableFinalState()
 
-	def ir_a(self):
+		nuevoFin.enableFinalState()
+		self.estadosDeAceptacion.clear()
+		self.estadosDeAceptacion[nuevoFin.idEstadoGeneral] = nuevoFin
+		self.estados[nuevoIni.idEstadoGeneral] = nuevoIni
+		self.estados[nuevoFin.idEstadoGeneral] = nuevoFin
+		self.estadoInicial = nuevoIni
+		
+
+	def ir_a(self,simbolo,estados):
 	#Luis
-	#Ir_a utiliza a mover para verificar un conjunto de estados y la direcciòn de a donde va con un simbolo del alfabeto.
-		pass
+		R = []
+
+		for e in estados:
+			R.append(mover(simbolo,estados[e]))
+
+		return cerradura_epsilon_C(R)	
 
 	def mover_C(self,simbolo,estados): #para moverse por todos los estados
 	#Oscar
@@ -158,3 +176,4 @@ if __name__ == "__main__":
 	alfabeto = ["d","e","f"]
 	a2 = Automata(alfabeto)
 	a1.cerradura_kleene()
+
