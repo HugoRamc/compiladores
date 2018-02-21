@@ -3,28 +3,17 @@ from transicion import *
 
 class Automata:
 	#al crear un objeto de la clase automata se crea un autómata básico con un caracter, dos estados y una transicion
-
 	def __init__(self,s):
-		#el alfabeto serà un caracter que sera convertido en ascii para hacer la transformaciòn
 		self.estadosDeAceptacion = {}
 		self.estados = {} #Para crear un automata basico se usan dos estado, el de entrada y el aceptaciòn
-		self.estadoInicial = 0
+		self.alfabeto = {}
 		self.alfabeto = []
-		#me mandan un arreglo para el alfabeto, si son 2 es porque es un rango.
-		if len(s) == 2:
-			minimo = ord(s[0])
-			maximo = ord(s[1])
-			i = 0
-			while i <= maximo-minimo:
-				self.alfabeto.append(chr(minimo+i))
-				i += 1
-		else:
-			self.alfabeto = s
-
+		for i in s:
+			self.alfabeto.append(i)
 		edoInicial = Estado()
 		edoFinal = Estado()
 		edoFinal.enableFinalState()
-		edoInicial.addTransicion(self.alfabeto,edoFinal)
+		edoInicial.addTransicion(s,edoFinal)
 		self.estadosDeAceptacion[edoFinal.idEstadoGeneral] = edoFinal
 		self.estados[edoInicial.idEstadoGeneral] = edoInicial
 		self.estados[edoFinal.idEstadoGeneral] = edoFinal
@@ -55,17 +44,7 @@ class Automata:
 		self.estadosDeAceptacion.clear()
 		self.estadosDeAceptacion[nuevoFin.idEstadoGeneral] = nuevoFin
 		self.estados.update(f2.estados)
-		print(self.estados)
-		print(self.estados[1].transicionesSalientes[1].simbolos)
 		self.alfabeto.extend(f2.alfabeto)
-		print(self.estados[1].transicionesSalientes[1].simbolos)
-
-		for e in self.estados:
-			for t in self.estados[e].transicionesSalientes:
-				print('\t Estos de SELF con f2: ',e)
-				print(self.estados[e].transicionesSalientes[t].simbolos)
-				print('\t Transiciones de SELF con f2')
-				print(self.estados[e].transicionesSalientes[t].idEstadoDestino)
 
 
 	def concatenar(self,f2):
@@ -73,22 +52,37 @@ class Automata:
 			self.estadosDeAceptacion[e].disableFinalState()
 			for t in f2.estadoInicial.transicionesSalientes:
 				self.estadosDeAceptacion[e].addTransicion(f2.estadoInicial.transicionesSalientes[t].simbolos,f2.estadoInicial.transicionesSalientes[t].idEstadoDestino)
-		#Estados
-		#Estados de aceptacion
-		#Estado inicial
+
 		f2.estados.pop(f2.estadoInicial.idEstadoGeneral)
 		self.estadosDeAceptacion.clear()
 		self.estadosDeAceptacion.update(f2.estadosDeAceptacion)
 		self.estados.update(f2.estados)
 		self.alfabeto.extend(f2.alfabeto)
-		
-	def cerradura_kleene(self):
 
-	#Oscar
-		return kleeneAutomata
+	def cerradura_kleene(self):
+		#Oscar
+		nuevoIni = Estado()
+		nuevoFin = Estado()
+		nuevoIni.addTransicion(["Ǝ"],self.estadoInicial)
+		nuevoIni.addTransicion(["Ǝ"],nuevoFin)
+		for e in self.estadosDeAceptacion:
+			estado = self.estadosDeAceptacion[e]
+			self.estadosDeAceptacion[e].disableFinalState()
+
+		estado.addTransicion(["Ǝ"],self.estadoInicial)
+		self.estadosDeAceptacion.clear()
+		nuevoFin.enableFinalState()
+		self.estadosDeAceptacion[nuevoFin.idEstadoGeneral] = nuevoFin
+		self.estados[nuevoIni.idEstadoGeneral] = nuevoIni
+		self.estados[nuevoFin.idEstadoGeneral] = nuevoFin
+		self.estadoInicial = nuevoIni
 
 	def cerradura_positiva(self):
 	#Luis
+		pass
+
+	def cerraduta_interrogacion(self):
+		#Luis
 		pass
 
 	def ir_a(self):
@@ -96,13 +90,23 @@ class Automata:
 	#Ir_a utiliza a mover para verificar un conjunto de estados y la direcciòn de a donde va con un simbolo del alfabeto.
 		pass
 
-	def mover_C(self):
+	def mover_C(self,simbolo,estados): #para moverse por todos los estados
 	#Oscar
-		return moverEstados
+		R = []
+		#Estados es un diccionario
+		for e in estados:
+			R.append(mover(simbolo,estados[e]))
 
-	def mover(self):
+		return R
+
+	def mover(self,simbolo,estado): #Para moverse por un estado
 	#Oscar
-		return moverEstados
+		R = []
+		for t in estado.transicionesSalientes:
+			if simbolo in estado.transicionesSalientes[t].simbolos:
+				R.append(estado.transicionesSalientes[t].idEstadoDestino)
+
+		return R
 
 	def cerradura_epsilon_C(self):
 	#Hugo
@@ -126,4 +130,4 @@ if __name__ == "__main__":
 	a1 = Automata(alfabeto)
 	alfabeto = ["d","e","f"]
 	a2 = Automata(alfabeto)
-	a1.unir(a2)
+	a1.cerradura_kleene()
