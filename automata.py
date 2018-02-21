@@ -66,12 +66,12 @@ class Automata:
 		nuevoIni.addTransicion(["Ǝ"],self.estadoInicial)
 		nuevoIni.addTransicion(["Ǝ"],nuevoFin)
 		for e in self.estadosDeAceptacion:
-			estado = self.estadosDeAceptacion[e]
+			self.estadosDeAceptacion[e].addTransicion(["Ǝ"],nuevoFin)
+			self.estadosDeAceptacion[e].addTransicion(["Ǝ"],self.estadoInicial)
 			self.estadosDeAceptacion[e].disableFinalState()
 
-		estado.addTransicion(["Ǝ"],self.estadoInicial)
-		self.estadosDeAceptacion.clear()
 		nuevoFin.enableFinalState()
+		self.estadosDeAceptacion.clear()
 		self.estadosDeAceptacion[nuevoFin.idEstadoGeneral] = nuevoFin
 		self.estados[nuevoIni.idEstadoGeneral] = nuevoIni
 		self.estados[nuevoFin.idEstadoGeneral] = nuevoFin
@@ -82,7 +82,7 @@ class Automata:
 		nuevoIni = Estado()
 		nuevoFin = Estado()
 		nuevoIni.addTransicion(["Ǝ"],self.estadoInicial)
-		
+
 		for idEstado in self.estadosDeAceptacion:
 			self.estadosDeAceptacion[idEstado].addTransicion(["Ǝ"],nuevoFin)
 			self.estadosDeAceptacion[idEstado].addTransicion(["Ǝ"],self.estadoInicial)
