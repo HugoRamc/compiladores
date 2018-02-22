@@ -2,6 +2,9 @@ from estado import *
 from transicion import *
 
 class Automata:
+
+	epsilon = ["Ǝ"]
+	vacio = ["Ø"]
 	#al crear un objeto de la clase automata se crea un autómata básico con un caracter, dos estados y una transicion
 	def __init__(self,s):
 		self.estadosDeAceptacion = {}
@@ -97,30 +100,12 @@ class Automata:
 
 	def cerradura_interrogacion(self):
 		#Luis
-		nuevoIni = Estado()
-		nuevoFin = Estado()
-		nuevoIni.addTransicion(["Ǝ"],self.estadoInicial)
-		nuevoIni.addTransicion(["Ǝ"],nuevoFin)
-		for e in self.estadosDeAceptacion:
-			self.estadosDeAceptacion[e].addTransicion(["Ǝ"],nuevoFin)
-			self.estadosDeAceptacion[e].disableFinalState()
+		pass
 
-		nuevoFin.enableFinalState()
-		self.estadosDeAceptacion.clear()
-		self.estadosDeAceptacion[nuevoFin.idEstadoGeneral] = nuevoFin
-		self.estados[nuevoIni.idEstadoGeneral] = nuevoIni
-		self.estados[nuevoFin.idEstadoGeneral] = nuevoFin
-		self.estadoInicial = nuevoIni
-		
-
-	def ir_a(self,simbolo,estados):
+	def ir_a(self):
 	#Luis
-		R = []
-
-		for e in estados:
-			R.append(mover(simbolo,estados[e]))
-
-		return cerradura_epsilon_C(R)	
+	#Ir_a utiliza a mover para verificar un conjunto de estados y la direcciòn de a donde va con un simbolo del alfabeto.
+		pass
 
 	def mover_C(self,simbolo,estados): #para moverse por todos los estados
 	#Oscar
@@ -166,6 +151,22 @@ class Automata:
 
 		return conjSalida
 
+	def analizaCadena(self,cadena):
+		##utilizar los estados self.estados
+		
+		r = self.cerradura_epsilon(self.estadoInicial)
+
+		for i in range(0,len(r))
+			c = ir_a(r,cadena[i])
+			if c == Automata.vacio:
+				return false 
+			
+		for edo in c:
+			if(edo in self.estadosDeAceptacion):
+				return true
+		return false
+
+
 
 	def epsilon():
 		pass
@@ -176,4 +177,3 @@ if __name__ == "__main__":
 	alfabeto = ["d","e","f"]
 	a2 = Automata(alfabeto)
 	a1.cerradura_kleene()
-
