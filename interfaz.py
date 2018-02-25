@@ -1,17 +1,21 @@
 from tkinter import *
+from tkinter import messagebox
 from tkinter import ttk
 from automata import *
 
 pila_automatas = []
 
-def update_AFN(f,laut,m,accion):
+def update_AFN(f,laut,m,accion,cadena):
     if m == "Crear AFN Básico":
         aux = []
         if accion.find(",") != -1:
             aux = accion.split(",")
         elif ord(accion[0])>64:
-            for i in range(ord(accion[0]),ord(accion[2])+1):
-                aux.append(chr(i))
+            if len(accion) == 1:
+                aux.append(accion[0])
+            else:
+                for i in range(ord(accion[0]),ord(accion[2])+1):
+                    aux.append(chr(i))
         elif accion.find("-") != -1:
             separador = accion.index("-")
             for i in range (int(accion[:separador]),int(accion[separador-len(accion)+1:])+1):
@@ -25,28 +29,37 @@ def update_AFN(f,laut,m,accion):
     if m == "Unir AFN's":
         automata1 = accion[0].get()
         automata2 = accion[1].get()
-        pila_automatas[int(automata1)].unir(pila_automatas[int(automata2)])
+        pila_automatas[int(automata1)-1].unir(pila_automatas[int(automata2)-1])
         ##implementacion
     if m == "Concatenar AFN´s":
         automata1 = accion[0].get()
         automata2 = accion[1].get()
-        pila_automatas[int(automata1)].unir(pila_automatas[int(automata2)])
+        pila_automatas[int(automata1)-1].concatenar(pila_automatas[int(automata2)-1])
         ##implementacion
 
     if m == "Operación +":
         automata = accion.get()
-        pila_automatas[int(automata)].cerradura_positiva()
+        pila_automatas[int(automata)-1].cerradura_positiva()
         ##implementacion
     if m == "Operación *":
         automata = accion.get()
-        pila_automatas[int(automata)].cerradura_kleene()
+        pila_automatas[int(automata)-1].cerradura_kleene()
         ##implementacion
     if m == "Operación ?":
         automata = accion.get()
-        pila_automatas[int(automata)].cerradura_interrogacion()
+        pila_automatas[int(automata)-1].cerradura_interrogacion()
         ##implementacion
 
-    laut.configure(text=str(int(laut.cget("text"))+1))
+    if m == "Validar Cadena":
+        automata = accion[0].get()
+        pertenece = pila_automatas[int(automata)-1].analizaCadena(cadena)
+        if pertenece is True:
+            messagebox.showinfo("Exito", "Tu cadena pertenece al automata")
+        else:
+            messagebox.showinfo("Error", "Tu cadena no pertenece al automata")
+        ##implementacion
+
+    laut.configure(text=str(len(pila_automatas)))
     f.update()
 def create_AFN(m,main,laut):
         f = Tk()
@@ -63,7 +76,7 @@ def create_AFN(m,main,laut):
         label.place(x = 20,y = 90)
         E = Entry(f, bd = 0,width=6)
         E.place(x = 90,y = 90)
-        B = Button(f, text = "Finalizar",command = lambda: update_AFN(main,laut,m,E.get()),highlightbackground='LightBlue3')
+        B = Button(f, text = "Finalizar",command = lambda: update_AFN(main,laut,m,E.get(),None),highlightbackground='LightBlue3')
         B.place(x = 20, y =160)
         f.mainloop()
 
@@ -87,9 +100,10 @@ def unir_conca_AFN(m,main,laut):
         Combo[1]["values"] = aux
         Combo[1].current(0)
         Combo[1].place(x=130,y=50)
-        B = Button(f, text = m,command = lambda: update_AFN(main,laut,m,Combo),highlightbackground='LightBlue3')
+        B = Button(f, text = m,command = lambda: update_AFN(main,laut,m,Combo,None),highlightbackground='LightBlue3')
         B.place(x = 60, y =90)
         f.mainloop()
+
 def operation_aso(m,main,laut):
     f = Tk()
     f.geometry('200x150')
@@ -98,19 +112,44 @@ def operation_aso(m,main,laut):
     label = Label(f, text=m, font = ("Helvetica", "18"),background='LightBlue3')
     label.place(x = 60,y = 13)
     aux = []
-    for i in range(aut):
+    for i in range(len(pila_automatas)):
         aux.append(str(i+1))
     Combo1 = ttk.Combobox(f, state="readonly",width=4)
     Combo1["values"] = aux
     Combo1.current(0)
     Combo1.place(x=70,y=50)
-    B = Button(f, text = "Finalizar",command = lambda: update_AFN(main,laut,m,Combo1),highlightbackground='LightBlue3')
+    B = Button(f, text = "Finalizar",command = lambda: update_AFN(main,laut,m,Combo1,None),highlightbackground='LightBlue3')
     B.place(x = 60, y =90)
 
     ##if m == "Operación +":
     ##if m == "Operación *":
     ##if m == "Operación ?":
     f.mainloop()
+
+def validar(m,main,laut):
+        f = Tk()
+        f.geometry('200x150')
+        f.configure(bg = 'LightBlue3')
+        f.title(m)
+        label = Label(f, text=m, font = ("Helvetica", "18"),background='LightBlue3')
+        label.place(x = 60,y = 13)
+        aux = []
+        for i in range(int(laut.cget("text"))):
+            aux.append(str(i+1))
+        Combo = []
+        Combo.append(ttk.Combobox(f, state="readonly",width=4))
+        Combo[0]["values"] = aux
+        Combo[0].current(0)
+        Combo[0].place(x=10,y=50)
+        Combo.append(ttk.Combobox(f, state="readonly",width=4))
+        label = Label(f, text="Entrada:",background='LightBlue3')
+        label.place(x = 20,y = 90)
+        E = Entry(f, bd = 0,width=6)
+        E.place(x = 90,y = 90)
+        B = Button(f, text = m,command = lambda: update_AFN(main,laut,m,Combo,E.get()),highlightbackground='LightBlue3')
+        B.place(x = 90, y =130)
+        f.mainloop()
+
 def salir(f):
         f.destroy()
 
@@ -127,6 +166,10 @@ def popmessage(m,aut,f,laut):
         operation_aso(m,f,laut)
     if m == "Operación ?":
         operation_aso(m,f,laut)
+
+    if m == "Validar Cadena":
+        validar(m,f,laut)
+
     if m == "Salir":
         salir(f)
 
