@@ -52,6 +52,7 @@ def update_AFN(f,laut,m,accion,cadena):
 
     if m == "Validar Cadena":
         automata = accion[0].get()
+        print('lo mando desde aqui: ',cadena)
         pertenece = pila_automatas[int(automata)-1].analizaCadena(cadena)
         if pertenece is True:
             messagebox.showinfo("Exito", "Tu cadena pertenece al automata")

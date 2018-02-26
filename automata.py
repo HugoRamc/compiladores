@@ -192,15 +192,12 @@ class Automata:
 		r = self.cerradura_epsilon(self.estadoInicial)
 		pila = []
 		print('r: ', r)
-		pila.append(r)
-		for i in range(0,len(r)):
-			for s in cadena:
-				print('cadena: ',s)
-				c = self.ir_a(s,r)
-				if not c:
-					return False
-				else:
-					r = c
+		for s in cadena:
+			c = self.ir_a(s,r)
+			if not c:
+				return False
+			else:
+				r = c
 
 		for edo in c:
 			if edo.idEstadoGeneral in self.estadosDeAceptacion:
