@@ -155,7 +155,6 @@ class Automata:
 		for estado in estado_aux:
 			conjSalida.extend(self.cerradura_epsilon(estado))
 
-		print('cerradura_epsilon_C: ', conjSalida)
 		return conjSalida
 
 	def cerradura_epsilon(self,estado):#esta cerradura epsilon es para solo un estado
@@ -177,7 +176,6 @@ class Automata:
 						entrar = True
 						pilaEstados.append(r.transicionesSalientes[t].idEstadoDestino)
 
-		print('cerradura_epsilon: ',conjSalida)
 		return conjSalida
 
 	def analizaCadena(self,cadena):
@@ -191,7 +189,6 @@ class Automata:
 
 		r = self.cerradura_epsilon(self.estadoInicial)
 		pila = []
-		print('r: ', r)
 		for s in cadena:
 			c = self.ir_a(s,r)
 			if not c:

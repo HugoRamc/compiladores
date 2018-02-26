@@ -13,6 +13,8 @@ def update_AFN(f,laut,m,accion,cadena):
         elif ord(accion[0])>64:
             if len(accion) == 1:
                 aux.append(accion[0])
+            elif len(accion) == 0:
+                aux.append("Ǝ")
             else:
                 for i in range(ord(accion[0]),ord(accion[2])+1):
                     aux.append(chr(i))
@@ -52,7 +54,9 @@ def update_AFN(f,laut,m,accion,cadena):
 
     if m == "Validar Cadena":
         automata = accion[0].get()
-        print('lo mando desde aqui: ',cadena)
+        if cadena == "":
+            cadena = "Ǝ"
+        print(cadena)
         pertenece = pila_automatas[int(automata)-1].analizaCadena(cadena)
         if pertenece is True:
             messagebox.showinfo("Exito", "Tu cadena pertenece al automata")
@@ -62,6 +66,7 @@ def update_AFN(f,laut,m,accion,cadena):
 
     laut.configure(text=str(len(pila_automatas)))
     f.update()
+
 def create_AFN(m,main,laut):
         f = Tk()
         f.geometry('420x200')
