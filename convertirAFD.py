@@ -52,10 +52,5 @@ class convertirAFD(object):
 	def getTabla(self):
 		return self.tablaTransiciones
 
-	def estadoAceptacionSi(self,Si):
-		for i in range(0,len(Si)):
-			if Si[i] is estadoAceptacion:
-				self.edosAceptacion.append(Si)
-		#return estadoAceptacion.token
 		
 		
