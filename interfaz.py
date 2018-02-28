@@ -69,7 +69,7 @@ def update_AFN(f,laut,m,accion,cadena):
 
 def create_AFN(m,main,laut):
         f = Tk()
-        f.geometry('420x200')
+        f.geometry('390x250')
         f.configure(bg = 'LightBlue3')
         f.title(m)
         label = Label(f, text=m, font = ("Helvetica", "18"),background='LightBlue3')
@@ -89,7 +89,7 @@ def create_AFN(m,main,laut):
 
 def unir_conca_AFN(m,main,laut):
         f = Tk()
-        f.geometry('200x150')
+        f.geometry('270x150')
         f.configure(bg = 'LightBlue3')
         f.title(m)
         label = Label(f, text=m, font = ("Helvetica", "18"),background='LightBlue3')
@@ -112,7 +112,7 @@ def unir_conca_AFN(m,main,laut):
 
 def operation_aso(m,main,laut):
     f = Tk()
-    f.geometry('200x150')
+    f.geometry('250x150')
     f.configure(bg = 'LightBlue3')
     f.title(m)
     label = Label(f, text=m, font = ("Helvetica", "18"),background='LightBlue3')
@@ -134,7 +134,7 @@ def operation_aso(m,main,laut):
 
 def validar(m,main,laut):
         f = Tk()
-        f.geometry('200x150')
+        f.geometry('390x250')
         f.configure(bg = 'LightBlue3')
         f.title(m)
         label = Label(f, text=m, font = ("Helvetica", "18"),background='LightBlue3')
