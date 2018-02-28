@@ -8,11 +8,13 @@ class convertirAFD(object):
 		self.edosAceptacion = {}
 		self.conjuntosSi = []
 		self.tablaTransiciones = []
+		print("Estamos llamando al objeto :D")
 		self.AFNtoAFD()
 
 
 	def AFNtoAFD(self):
-		S0 = self.AFD.cerraduraEpsilon(self.AFD.estadoInicial)
+		conjuntosSi = []
+		S0 = self.AFD.cerradura_epsilon(self.AFD.estadoInicial)
 		conjuntosSi.append(S0)
 		conj = 0
 
@@ -21,19 +23,33 @@ class convertirAFD(object):
 			for c in self.AFD.alfabeto:
 				aux = self.AFD.ir_a(c,Si)
 
-				if aux not instanceof() conjuntosSi:
-					conjuntosSi.append(aux)
-					conj+=1
-					x = conj
-				elif:
-					x=aux.index(conjuntosSi)
-				else
+				if len(aux) >= 1:
+					if aux not in conjuntosSi:
+						conjuntosSi.append(aux)
+						conj+=1
+						x = conj
+					else:
+						x=aux.index(conjuntosSi)
+				else:
 					x = -1
 				aux1.append(x)
-				"""aux.append(estadoAceptacionSi)
-					duda de donde sacamos el estadoAceptacionSi
-				"""
-			tablaTransiciones.append(aux1)
+				if self.AFD.isEstadoAceptacion(Si):
+					aux1.append(int(self.AFD.token))
+				else:
+					aux1.append(int("-1"))
+
+				#if conjuntoSi is edoAceptacion append(Token) else append -1
+				#aux.append(estadoAceptacionSi)
+					
+			self.tablaTransiciones.append(aux1)
+
+			for fila in self.tablaTransiciones:
+				print(fila)
+
+		print(self.tablaTransiciones)
+
+	def getTabla(self):
+		return self.tablaTransiciones
 
 	def estadoAceptacionSi(self,Si):
 		for i in range(0,len(Si)):
@@ -42,4 +58,3 @@ class convertirAFD(object):
 		#return estadoAceptacion.token
 		
 		
-obj = convertirAFD()

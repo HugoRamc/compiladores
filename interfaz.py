@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 from automata import *
+from convertirAFD import *
 
 pila_automatas = []
 
@@ -63,6 +64,12 @@ def update_AFN(f,laut,m,accion,cadena):
         else:
             messagebox.showinfo("Error", "Tu cadena no pertenece al automata")
         ##implementacion
+
+    if m == "Convertir a AFD":
+        indexAutomata = accion.get()
+        AFD = convertirAFD(pila_automatas[int(indexAutomata)-1])
+
+
 
     laut.configure(text=str(len(pila_automatas)))
     f.update()
@@ -175,6 +182,8 @@ def popmessage(m,aut,f,laut):
 
     if m == "Validar Cadena":
         validar(m,f,laut)
+    if m == "Convertir a AFD":
+        operation_aso(m,f,laut)
 
     if m == "Salir":
         salir(f)
@@ -182,10 +191,10 @@ def popmessage(m,aut,f,laut):
 def frame():
     aut = 1;
     aut +=1;
-    MsgButtons = ["Crear AFN Básico","Unir AFN's","Concatenar AFN´s","Operación +","Operación *","Operación ?","Validar Cadena","Salir"]
+    MsgButtons = ["Crear AFN Básico","Unir AFN's","Concatenar AFN´s","Operación +","Operación *","Operación ?","Validar Cadena","Convertir a AFD","Salir"]
     Buttons = []
     f = Tk()
-    f.geometry('350x300')
+    f.geometry('350x350')
     f.configure(bg = 'LightBlue3')
     f.title('Automatas')
     label = Label( f, text="Automatas", font = ("Helvetica", "18"),background='LightBlue3')

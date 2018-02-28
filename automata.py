@@ -3,10 +3,14 @@ from transicion import *
 
 class Automata:
 
+	#variable para controlar los tokens 
+	idToken = 0
 	epsilon = ["Ǝ"]
 	vacio = ["Ø"]
 	#al crear un objeto de la clase automata se crea un autómata básico con un caracter, dos estados y una transicion
 	def __init__(self,s):
+		Automata.idToken +=1
+		self.token = Automata.idToken
 		self.estadosDeAceptacion = {}
 		self.estados = {} #Para crear un automata basico se usan dos estado, el de entrada y el aceptaciòn
 		self.alfabeto = {}
@@ -188,6 +192,7 @@ class Automata:
 				print('aceptacion: ',self.estados[e].transicionesSalientes[t].idEstadoDestino.estadoAceptacion)
 
 		r = self.cerradura_epsilon(self.estadoInicial)
+
 		pila = []
 		for s in cadena:
 			c = self.ir_a(s,r)
@@ -196,10 +201,25 @@ class Automata:
 			else:
 				r = c
 
+		"""for edo in c:
+			if edo.idEstadoGeneral in self.estadosDeAceptacion:
+				return True
+		return False"""
+
+		if self.isEstadoAceptacion(c):
+			return True
+		else:
+			return False
+
+	def isEstadoAceptacion(self,c):
 		for edo in c:
 			if edo.idEstadoGeneral in self.estadosDeAceptacion:
 				return True
 		return False
+
+
+	def getToken(self):
+		return self.token
 
 
 #1 a u b
