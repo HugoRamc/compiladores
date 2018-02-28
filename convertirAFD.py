@@ -3,12 +3,12 @@ from automata import *
 class convertirAFD(object):
 	
 	def __init__(self,AFD):
+		print("Conversión a AFD")
 		self.AFD = AFD
 		self.edoInicial = AFD.estadoInicial
 		self.edosAceptacion = {}
 		self.conjuntosSi = []
 		self.tablaTransiciones = []
-		print("Estamos llamando al objeto :D")
 		self.AFNtoAFD()
 
 
@@ -23,30 +23,31 @@ class convertirAFD(object):
 			for c in self.AFD.alfabeto:
 				aux = self.AFD.ir_a(c,Si)
 
-				if len(aux) >= 1:
+				#si la operacion ir a trae un conjunto mayor a 
+				if len(aux) > 0:
 					if aux not in conjuntosSi:
 						conjuntosSi.append(aux)
 						conj+=1
 						x = conj
 					else:
-						x=aux.index(conjuntosSi)
+						x=conjuntosSi.index(aux)
 				else:
 					x = -1
+				
 				aux1.append(x)
-				if self.AFD.isEstadoAceptacion(Si):
-					aux1.append(int(self.AFD.token))
-				else:
-					aux1.append(int("-1"))
 
-				#if conjuntoSi is edoAceptacion append(Token) else append -1
-				#aux.append(estadoAceptacionSi)
+			if self.AFD.isEstadoAceptacion(Si):
+				aux1.append(int(self.AFD.token))
+			else:
+				aux1.append(int("-1"))	
+
 					
 			self.tablaTransiciones.append(aux1)
 
-			for fila in self.tablaTransiciones:
-				print(fila)
+		for fila in self.tablaTransiciones:
+			print(fila)
 
-		print(self.tablaTransiciones)
+		print("\nTerminado")
 
 	def getTabla(self):
 		return self.tablaTransiciones
