@@ -5,6 +5,7 @@ from automata import *
 from convertirAFD import *
 
 pila_automatas = []
+pilaaux = []
 
 def update_AFN(f,laut,m,accion,cadena):
     if m == "Crear AFN Básico":
@@ -34,7 +35,15 @@ def update_AFN(f,laut,m,accion,cadena):
         automata2 = accion[1].get()
         pila_automatas[int(automata1)-1].unir(pila_automatas[int(automata2)-1])
     if m == "Union Especial":
-        print(accion)
+         cadena = accion.split(",")
+         pilaaux.clear()
+         for item in (cadena):
+            pilaaux.append(pila_automatas[int(item)-1])
+
+         pila_automatas[int(cadena[0])-1].union_especial(pilaaux[1:])
+
+
+
     if m == "Concatenar AFN´s":
         automata1 = accion[0].get()
         automata2 = accion[1].get()
@@ -68,7 +77,9 @@ def update_AFN(f,laut,m,accion,cadena):
 
     if m == "Convertir a AFD":
         indexAutomata = accion.get()
-        AFD = convertirAFD(pila_automatas[int(indexAutomata)-1])
+        AFD = convertirAFD(pila_automatas[int(indexAutomata)-1],pilaaux) 
+
+
 
 
 
@@ -147,7 +158,7 @@ def union_esp(m,main,laut):
     label.place(x = 10,y = 40)
     E = Entry(f, bd = 0,width=13)
     E.place(x = 10,y = 80)
-    B = Button(f, text = "Finalizar",command = lambda: update_AFN(main,laut,m,E.get().split(","),None),highlightbackground='LightBlue3')
+    B = Button(f, text = "Finalizar",command = lambda: update_AFN(main,laut,m,E.get(),None),highlightbackground='LightBlue3')
     B.place(x = 150, y =80)
     f.mainloop()
 

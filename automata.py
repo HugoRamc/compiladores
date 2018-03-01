@@ -192,12 +192,13 @@ class Automata:
 				print('aceptacion: ',self.estados[e].transicionesSalientes[t].idEstadoDestino.estadoAceptacion)
 
 		r = self.cerradura_epsilon(self.estadoInicial)
-
+		#print(self.estadoInicial.idEstadoGeneral)
 		pila = []
 		for s in cadena:
 			c = self.ir_a(s,r)
 			if not c:
 				return False
+				#return False
 			else:
 				r = c
 
@@ -224,6 +225,7 @@ class Automata:
 	def union_especial(self, automatas): #Une n automatas con n transiciones epsilon a un nuevo estado inicial
 		nuevoIni = Estado()
 
+		nuevoIni.addTransicion(["Ǝ"],self.estadoInicial)
 		for a in range(len(automatas)):
 			nuevoIni.addTransicion(["Ǝ"], automatas[a].estadoInicial)
 
@@ -235,6 +237,8 @@ class Automata:
 			self.estados.update(automatas[a].estados)
 			self.alfabeto.extend(automatas[a].alfabeto)
 
+		for i in self.estadosDeAceptacion:
+			print(self.estadosDeAceptacion[i].idEstadoGeneral)
 
 #1 a u b
 #1 kleene a u b
