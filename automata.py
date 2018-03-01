@@ -221,6 +221,20 @@ class Automata:
 	def getToken(self):
 		return self.token
 
+	def union_especial(self, automatas): #Une n automatas con n transiciones epsilon a un nuevo estado inicial
+		nuevoIni = Estado()
+
+		for a in range(len(automatas)):
+			nuevoIni.addTransicion(["Ǝ"], automatas[a].estadoInicial)
+
+		self.estados[nuevoIni.idEstadoGeneral] = nuevoIni
+		self.estadoInicial = nuevoIni
+
+		for a in range(len(automatas)):
+			self.estadosDeAceptacion.update((automatas[a].estadosDeAceptacion))
+			self.estados.update(automatas[a].estados)
+			self.alfabeto.extend(automatas[a].alfabeto)
+
 
 #1 a u b
 #1 kleene a u b
