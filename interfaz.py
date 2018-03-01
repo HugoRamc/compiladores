@@ -33,7 +33,8 @@ def update_AFN(f,laut,m,accion,cadena):
         automata1 = accion[0].get()
         automata2 = accion[1].get()
         pila_automatas[int(automata1)-1].unir(pila_automatas[int(automata2)-1])
-        ##implementacion
+    if m == "Union Especial":
+        print(accion)
     if m == "Concatenar AFN´s":
         automata1 = accion[0].get()
         automata2 = accion[1].get()
@@ -133,10 +134,21 @@ def operation_aso(m,main,laut):
     Combo1.place(x=70,y=50)
     B = Button(f, text = "Finalizar",command = lambda: update_AFN(main,laut,m,Combo1,None),highlightbackground='LightBlue3')
     B.place(x = 60, y =90)
+    f.mainloop()
 
-    ##if m == "Operación +":
-    ##if m == "Operación *":
-    ##if m == "Operación ?":
+def union_esp(m,main,laut):
+    f = Tk()
+    f.geometry('400x150')
+    f.configure(bg = 'LightBlue3')
+    f.title(m)
+    label = Label(f, text=m, font = ("Helvetica", "18"),background='LightBlue3')
+    label.place(x = 60,y = 13)
+    label = Label(f, text="Coloca los automatas a unir, separa por medio de comas",background='LightBlue3')
+    label.place(x = 10,y = 40)
+    E = Entry(f, bd = 0,width=13)
+    E.place(x = 10,y = 80)
+    B = Button(f, text = "Finalizar",command = lambda: update_AFN(main,laut,m,E.get().split(","),None),highlightbackground='LightBlue3')
+    B.place(x = 150, y =80)
     f.mainloop()
 
 def validar(m,main,laut):
@@ -171,6 +183,8 @@ def popmessage(m,aut,f,laut):
         create_AFN(m,f,laut)
     if m == "Unir AFN's":
         unir_conca_AFN(m,f,laut)
+    if m == "Union Especial":
+        union_esp(m,f,laut)
     if m == "Concatenar AFN´s":
         unir_conca_AFN(m,f,laut)
     if m == "Operación +":
@@ -179,7 +193,6 @@ def popmessage(m,aut,f,laut):
         operation_aso(m,f,laut)
     if m == "Operación ?":
         operation_aso(m,f,laut)
-
     if m == "Validar Cadena":
         validar(m,f,laut)
     if m == "Convertir a AFD":
@@ -191,7 +204,7 @@ def popmessage(m,aut,f,laut):
 def frame():
     aut = 1;
     aut +=1;
-    MsgButtons = ["Crear AFN Básico","Unir AFN's","Concatenar AFN´s","Operación +","Operación *","Operación ?","Validar Cadena","Convertir a AFD","Salir"]
+    MsgButtons = ["Crear AFN Básico","Unir AFN's","Union Especial","Concatenar AFN´s","Operación +","Operación *","Operación ?","Validar Cadena","Convertir a AFD","Salir"]
     Buttons = []
     f = Tk()
     f.geometry('350x350')

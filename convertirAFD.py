@@ -1,7 +1,7 @@
 from estado import *
 from automata import *
 class convertirAFD(object):
-	
+
 	def __init__(self,AFD):
 		print("Conversión a AFD")
 		self.AFD = AFD
@@ -23,7 +23,7 @@ class convertirAFD(object):
 			for c in self.AFD.alfabeto:
 				aux = self.AFD.ir_a(c,Si)
 
-				#si la operacion ir a trae un conjunto mayor a 
+				#si la operacion ir a trae un conjunto mayor a
 				if len(aux) > 0:
 					if aux not in conjuntosSi:
 						conjuntosSi.append(aux)
@@ -33,15 +33,15 @@ class convertirAFD(object):
 						x=conjuntosSi.index(aux)
 				else:
 					x = -1
-				
+
 				aux1.append(x)
 
 			if self.AFD.isEstadoAceptacion(Si):
 				aux1.append(int(self.AFD.token))
 			else:
-				aux1.append(int("-1"))	
+				aux1.append(int("-1"))
 
-					
+
 			self.tablaTransiciones.append(aux1)
 
 		for fila in self.tablaTransiciones:
@@ -51,6 +51,3 @@ class convertirAFD(object):
 
 	def getTabla(self):
 		return self.tablaTransiciones
-
-		
-		
