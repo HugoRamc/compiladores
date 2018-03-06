@@ -20,7 +20,7 @@ def update_AFN(f,laut,m,accion,cadena):
             else:
                 for i in range(ord(accion[0]),ord(accion[2])+1):
                     aux.append(chr(i))
-        elif accion.find("-") != -1:
+        elif accion.find("_") != -1:
             separador = accion.index("-")
             for i in range (int(accion[:separador]),int(accion[separador-len(accion)+1:])+1):
                 aux.append(str(i))

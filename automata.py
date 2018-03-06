@@ -13,7 +13,7 @@ class Automata:
 		self.token = Automata.idToken
 		self.estadosDeAceptacion = {}
 		self.estados = {} #Para crear un automata basico se usan dos estado, el de entrada y el aceptaciòn
-		self.alfabeto = {}
+		#self.alfabeto = {}
 		self.alfabeto = []
 		for i in s:
 			self.alfabeto.append(i)
@@ -51,7 +51,10 @@ class Automata:
 		self.estadosDeAceptacion.clear()
 		self.estadosDeAceptacion[nuevoFin.idEstadoGeneral] = nuevoFin
 		self.estados.update(f2.estados)
-		self.alfabeto.extend(f2.alfabeto)
+
+		alfaux = list(set.union(set(self.alfabeto),set(f2.alfabeto)))
+
+		self.alfabeto = alfaux
 
 
 	def concatenar(self,f2):
@@ -64,7 +67,9 @@ class Automata:
 		self.estadosDeAceptacion.clear()
 		self.estadosDeAceptacion.update(f2.estadosDeAceptacion)
 		self.estados.update(f2.estados)
-		self.alfabeto.extend(f2.alfabeto)
+		alfaux = list(set.union(set(self.alfabeto),set(f2.alfabeto)))
+
+		self.alfabeto = alfaux
 
 
 	def cerradura_kleene(self):
@@ -235,7 +240,9 @@ class Automata:
 		for a in range(len(automatas)):
 			self.estadosDeAceptacion.update((automatas[a].estadosDeAceptacion))
 			self.estados.update(automatas[a].estados)
-			self.alfabeto.extend(automatas[a].alfabeto)
+			alfaux = list(set.union(set(self.alfabeto),set(automatas[a].alfabeto)))
+
+			self.alfabeto = alfaux
 
 		for i in self.estadosDeAceptacion:
 			print(self.estadosDeAceptacion[i].idEstadoGeneral)
