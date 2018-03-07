@@ -5,30 +5,18 @@ class lexico(object):
 
 	def lexico(self,cadena):
 		cadenatokens = ""
-		posant = -1
 		while len(cadena) > 0:
 			
 
 			val,pos = self.validaCadena(cadena)
-			"""if posant == pos:
-				pos+=1
-				cadena = cadena[pos:]
-				continue
-			posant = pos"""
 
-			if val == -1:
+			if val == -1 or val == "-1":
 				cadenatokens +="-1,"
 				pos+=1
 			else:
 				cadenatokens+=str(val)+","
 			cadena = cadena[pos:]
 			
-
-		
-		"""if val == "-1":
-			print("Error" + "Tu cadena no pertenece al automata")
-		else:
-			print("Exito" + "Tu cadena pertenece al automata")"""
 		cadenatokens = cadenatokens[0:len(cadenatokens)-1]
 		return cadenatokens
 
