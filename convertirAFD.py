@@ -17,7 +17,7 @@ class convertirAFD(object):
 
 	def AFNtoAFD(self,pilaaux):
 
-
+		archivo = open("tablaAFD.txt","w")
 		conjuntosSi = []
 		S0 = self.AFD.cerradura_epsilon(self.AFD.estadoInicial)
 		conjuntosSi.append(S0)
@@ -27,6 +27,11 @@ class convertirAFD(object):
 		aux2.extend(self.AFD.alfabeto)
 		aux2.append("EdoAcep")
 		self.tablaTransiciones2.append(aux2)
+		straux = ""
+		for item in aux2:
+			straux += str(item)+","
+		straux = straux[0:len(straux)-1]
+		archivo.write(straux + "\n")		
 
 		for Si in conjuntosSi:
 			aux1 = []
@@ -61,7 +66,13 @@ class convertirAFD(object):
 				aux2.append(tokenaux)
 			else:
 				aux1.append(-1)
+				aux2.append(-1)
 
+			straux = ""
+			for item in aux2:
+				straux += str(item)+","
+			straux = straux[0:len(straux)-1]
+			archivo.write(straux + "\n")				
 
 			self.tablaTransiciones.append(aux1)
 			self.tablaTransiciones2.append(aux2)
@@ -71,7 +82,25 @@ class convertirAFD(object):
 		for fila in self.tablaTransiciones2:
 			print(fila)
 
+		archivo.close()
+
+
+
 		print("\nTerminado")
 
 	def getTabla(self):
-		return self.tablaTransiciones
+		return self.tablaTransiciones2
+
+	def leeTabla():
+		tablaTransiciones = []
+		archivo = open("tablaAFD.txt","r")
+		for line in archivo:
+			line = line.replace("\n","")
+			lin = line.split(",")
+			tablaTransiciones.append(lin)
+
+		return tablaTransiciones
+
+	def generaAlfabeto():
+		pass
+

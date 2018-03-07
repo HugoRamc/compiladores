@@ -3,9 +3,11 @@ from tkinter import messagebox
 from tkinter import ttk
 from automata import *
 from convertirAFD import *
+from lexico import *
 
 pila_automatas = []
 pilaaux = []
+tablaAFD = []
 
 def update_AFN(f,laut,m,accion,cadena):
     if m == "Crear AFN Básico":
@@ -78,6 +80,27 @@ def update_AFN(f,laut,m,accion,cadena):
     if m == "Convertir a AFD":
         indexAutomata = accion.get()
         AFD = convertirAFD(pila_automatas[int(indexAutomata)-1],pilaaux) 
+        tablaAFD = AFD.getTabla()
+
+    if m == "Léxico":
+        cadena = accion
+        try:
+            if len(tablaAFD) == 0:
+                tablaAFD = convertirAFD.leeTabla()
+        except:
+            tablaAFD = convertirAFD.leeTabla()
+
+        obj = lexico()
+
+        val,pos = obj.validaCadena(cadena,tablaAFD)
+        val = str(val)
+        pos = str(pos)
+        
+        print(val + ","+pos)
+        if val == "-1":
+            print("cadena no aceptada")
+        else:
+            print("cadena aceptada")
 
 
 
@@ -85,6 +108,9 @@ def update_AFN(f,laut,m,accion,cadena):
 
     laut.configure(text=str(len(pila_automatas)))
     f.update()
+
+
+
 
 def create_AFN(m,main,laut):
         f = Tk()
@@ -154,7 +180,10 @@ def union_esp(m,main,laut):
     f.title(m)
     label = Label(f, text=m, font = ("Helvetica", "18"),background='LightBlue3')
     label.place(x = 60,y = 13)
-    label = Label(f, text="Coloca los automatas a unir, separa por medio de comas",background='LightBlue3')
+    if m != "Léxico":
+        label = Label(f, text="Coloca los automatas a unir, separa por medio de comas",background='LightBlue3')
+    else:
+        label = Label(f, text="Introduce una cadena para ser analizada léxicamente",background='LightBlue3')
     label.place(x = 10,y = 40)
     E = Entry(f, bd = 0,width=13)
     E.place(x = 10,y = 80)
@@ -208,17 +237,22 @@ def popmessage(m,aut,f,laut):
         validar(m,f,laut)
     if m == "Convertir a AFD":
         operation_aso(m,f,laut)
+    if m == "Léxico":
+        union_esp(m,f,laut)
 
     if m == "Salir":
         salir(f)
 
+
+
 def frame():
+    tablaAFD.clear()
     aut = 1;
     aut +=1;
-    MsgButtons = ["Crear AFN Básico","Unir AFN's","Union Especial","Concatenar AFN´s","Operación +","Operación *","Operación ?","Validar Cadena","Convertir a AFD","Salir"]
+    MsgButtons = ["Crear AFN Básico","Unir AFN's","Union Especial","Concatenar AFN´s","Operación +","Operación *","Operación ?","Validar Cadena","Convertir a AFD","Léxico","Salir"]
     Buttons = []
     f = Tk()
-    f.geometry('350x350')
+    f.geometry('350x400')
     f.configure(bg = 'LightBlue3')
     f.title('Automatas')
     label = Label( f, text="Automatas", font = ("Helvetica", "18"),background='LightBlue3')
