@@ -98,9 +98,9 @@ def update_AFN(f,laut,m,accion,cadena):
         
         print(val + ","+pos)
         if val == "-1":
-            print("cadena no aceptada")
+            messagebox.showinfo("Error", "Tu cadena no pertenece al automata")
         else:
-            print("cadena aceptada")
+            messagebox.showinfo("Exito", "Tu cadena pertenece al automata")
 
 
 
