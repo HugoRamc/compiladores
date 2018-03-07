@@ -90,17 +90,10 @@ def update_AFN(f,laut,m,accion,cadena):
         except:
             tablaAFD = convertirAFD.leeTabla()
 
-        obj = lexico()
+        obj = lexico(tablaAFD)
+        cadenaTokens = obj.lexico(cadena)
 
-        val,pos = obj.validaCadena(cadena,tablaAFD)
-        val = str(val)
-        pos = str(pos)
-        
-        print(val + ","+pos)
-        if val == "-1":
-            messagebox.showinfo("Error", "Tu cadena no pertenece al automata")
-        else:
-            messagebox.showinfo("Exito", "Tu cadena pertenece al automata")
+        print(cadenaTokens)
 
 
 
