@@ -4,24 +4,28 @@ class lexico(object):
 		self.tablaAFD = tablaAFD
 
 	def lexico(self,cadena):
-		cadenatokens = ""
-		while len(cadena) > 0:
+
+		#while len(cadena) > 0:
+		if len(cadena) == 0:
+			return "0",cadena,0
 			
 
-			val,pos = self.validaCadena(cadena)
+		edo,pos = self.validaCadena(cadena)
 
-			if val == -1 or val == "-1":
-				cadenatokens +="-1,"
-				pos+=1
-			else:
-				cadenatokens+=str(val)+","
-			cadena = cadena[pos:]
+		if edo == -1 or edo == "-1":
+			#edo +="-1"
+			pos+=1
+		#else:
+			#edo+=str(edo)+""
+		lexema = cadena[pos:]
+
+		return edo,lexema,pos
 			
-		cadenatokens = cadenatokens[0:len(cadenatokens)-1]
-		return cadenatokens
+		#cadenatokens = cadenatokens[0:len(cadenatokens)-1]
+		#return cadenatokens
 
 	def validaCadena(self,cadena):
-	    print("Hola cadena "+cadena)
+	    print("Hola cadena "+cadena+"\n")
 	    caracteres = self.tablaAFD[0]
 	    edoActual = 0
 	    i=0
@@ -31,7 +35,7 @@ class lexico(object):
 	        if c not in caracteres:
 	            return -1,i
 	        else:
-	            print(edoActual)
+	            #print(edoActual)
 	            y = caracteres.index(c)
 	            x = self.tablaAFD[int(edoActual)+1]
 	            edoActual = int(x[y])
@@ -45,7 +49,7 @@ class lexico(object):
 	            
 	        i+=1
 
-	    print(edoActual)
+	   # print(edoActual)
 	    x = self.tablaAFD[edoActual+1]
 	    if x[len(x)-1] == -1:
 	        return -1,i

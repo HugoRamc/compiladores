@@ -90,10 +90,17 @@ def update_AFN(f,laut,m,accion,cadena):
         except:
             tablaAFD = convertirAFD.leeTabla()
 
-        obj = lexico(tablaAFD)
-        cadenaTokens = obj.lexico(cadena)
+        lex = lexico(tablaAFD)
+        #cadenatokens = ""
+        while True:
+            token,lexema,pos = lex.lexico(cadena)
+            print(token +"-----"+  lexema)
+            cadena = cadena[pos:]
+            if token == "0":
+                break
 
-        print(cadenaTokens)
+        
+        
 
 
 
