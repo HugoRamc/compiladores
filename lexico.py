@@ -3,30 +3,25 @@ class lexico(object):
 	def __init__(self,tablaAFD,cadena):
 		self.cadena = cadena
 		self.tablaAFD = tablaAFD
-		self.pos = 0
-	
+		
 
 	def getToken(self):
 
-		#while len(cadena) > 0:
 		if len(self.cadena) == 0:
 			return "0",self.cadena
 			
 
-		edo,self.pos = self.validaCadena(self.cadena)
+		edo,pos = self.validaCadena(self.cadena)
 
 		if edo == -1 or edo == "-1":
-			#edo +="-1"
-			self.pos+=1
-		#else:
-			#edo+=str(edo)+""
-		lexema = self.cadena[:self.pos]
-		self.cadena = self.cadena[self.pos:]
+			pos+=1
+
+
+		lexema = self.cadena[:pos]
+		self.cadena = self.cadena[pos:]
 
 		return edo,lexema
-			
-		#cadenatokens = cadenatokens[0:len(cadenatokens)-1]
-		#return cadenatokens
+
 
 	def validaCadena(self,cadena):
 	    #print("Hola cadena "+cadena+"\n")
