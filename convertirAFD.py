@@ -23,7 +23,7 @@ class convertirAFD(object):
 		conjuntosSi.append(S0)
 		conj = 0
 		aux2 = []
-		aux2.append(" ")
+		aux2.append("")
 		aux2.extend(self.AFD.alfabeto)
 		aux2.append("EdoAcep")
 		self.tablaTransiciones2.append(aux2)
