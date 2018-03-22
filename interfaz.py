@@ -79,7 +79,7 @@ def update_AFN(f,laut,m,accion,cadena):
 
     if m == "Convertir a AFD":
         indexAutomata = accion.get()
-        AFD = convertirAFD(pila_automatas[int(indexAutomata)-1],pilaaux) 
+        AFD = convertirAFD(pila_automatas[int(indexAutomata)-1],pilaaux)
         tablaAFD = AFD.getTabla()
 
     if m == "Léxico":
@@ -90,21 +90,13 @@ def update_AFN(f,laut,m,accion,cadena):
         except:
             tablaAFD = convertirAFD.leeTabla()
 
-        lex = lexico(tablaAFD,cadena)
+        lex = Lexico(tablaAFD,cadena)
         #cadenatokens = ""
         token = ""
         while token != "0":
-            
+
             token,lexema = lex.getToken()
             print(token +"-----"+  lexema)
-            
-
-        
-        
-
-
-
-
 
     laut.configure(text=str(len(pila_automatas)))
     f.update()
