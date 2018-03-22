@@ -9,11 +9,14 @@ from lexico import *
 calculadora = Calculadora()
 
 def clean_string(cadena):
+    print(cadena.get())
     c = cadena.get()
     aux = ""
     i = 0
     ii = len(c)
+    print("ii: ",ii)
     while i < ii:
+        print(c[i])
         if c[i] == "s" or c[i] == "c" or c[i] == "t":
             aux = aux + c[i]
             i = i + 3
@@ -43,6 +46,7 @@ def clean_string(cadena):
             i+=1
 
     cadena.set(aux)
+
 def popmessage(m,L,frame,Buttons):
     cadena = StringVar()
     if m == "MODE":
@@ -56,15 +60,17 @@ def popmessage(m,L,frame,Buttons):
         cadena.set(L.cget("text"))
         clean_string(cadena)
         c = cadena.get()
+        print(c)
         lex = Lexico(calculadora.tablaAFD,c)
         calculadora.lex = lex
         valido, v = calculadora.analizar()
+        print(valido)
+        v = round(v,5)
+        print(v)
         if valido:
-            #aquí puedes muestrar lo que te regrese v broo en la barrita de la calculadora? :3
-            pass
+            L.configure(text = v)
         else:
-            #Aquí pon el famoso sintax error o una mamada así amigo jaja
-            pass
+            L.configure(text = "Syntax Error")
         #Te amito <3
 
     else:

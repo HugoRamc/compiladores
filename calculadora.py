@@ -1,7 +1,4 @@
-from automata import *
 from tokens import *
-from convertirAFD import *
-#from lexico import *
 import math
 
 class Calculadora:
@@ -11,67 +8,13 @@ class Calculadora:
 		self.lex = None
 
 	def crear_tokens(self):
-		pila_tokens = []
-		pila_automatas = []
-		automata = Automata(["0","1","2","3","4","5","6","7","8","9","e","p"])
-		automata_aux = automata #copia de automata de numeros
-		automata.cerradura_positiva()# primer automata con numeros que se repiten
-		automata_aux.cerradura_positiva()# segundo automata con numeros que se repiten
-		automata_punto = Automata(["."])
-		automata_punto.concatenar(automata_aux)
-		automata_punto.cerradura_interrogacion()
-		automata.concatenar(automata_punto)
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["+"])
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["-"])
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["*"])
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["/"])
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["("])
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata([")"])
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["^"]) #token para exponencial
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["r"]) #token para exponencial
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["c"]) #Token para el coseno
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["s"]) #Token para el seno
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["t"]) #Token para la tangente
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["l"]) #Token para log
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		automata = Automata(["n"]) #Token para ln
-		pila_tokens.append(automata.token*10)
-		pila_automatas.append(automata)
-		pila_automatas[0].union_especial(pila_automatas[1:])
-		AFD = convertirAFD(pila_automatas[0],pila_automatas)
-		self.tablaAFD = AFD.getTabla()
-		self.clase_lexema = Tokens(pila_tokens)
+		self.clase_lexema = Tokens()
+		self.tablaAFD = self.clase_lexema.tablaAFD
 
 	#Todos los primos regresan el token y regresan verdadero
 	def analizar(self):
 		v = 0.0
 		valido,v = self.E(v)
-		print(valido)
 		if valido:
 			tok,lexema = self.lex.getToken()
 			if tok == "0":
@@ -125,7 +68,6 @@ class Calculadora:
 
 	def Tp(self,v):
 		tok,lexema = self.lex.getToken()
-		print(tok)
 		v1 = 0.0
 		if tok == self.clase_lexema.mul or tok == self.clase_lexema.div:
 			valido,v1 = self.F(v1)
@@ -159,14 +101,16 @@ class Calculadora:
 
 	def F(self,v):
 		tok,lexema = self.lex.getToken()
-		print(tok)
+
 		if tok == self.clase_lexema.num:
+			v = float(lexema)
+			return True,v
+
+		elif tok == self.clase_lexema.especial:
 			if lexema == "e":
 				v = math.e
-			elif lexema == "p":
-				v = math.pi
 			else:
-				v = float(lexema)
+				v = math.pi
 			return True,v
 
 		elif tok == self.clase_lexema.parI:
@@ -234,6 +178,7 @@ class Calculadora:
 
 		elif tok == self.clase_lexema.raiz:
 			tok,_ = self.lex.getToken()
+			print(tok)
 			if tok == self.clase_lexema.parI:
 				valido,v = self.E(v)
 				if valido:
