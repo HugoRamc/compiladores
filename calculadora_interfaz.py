@@ -58,7 +58,14 @@ def popmessage(m,L,frame,Buttons):
         c = cadena.get()
         lex = Lexico(calculadora.tablaAFD,c)
         calculadora.lex = lex
-        print(calculadora.analizar())
+        valido, v = calculadora.analizar()
+        if valido:
+            #aquí puedes muestrar lo que te regrese v broo en la barrita de la calculadora? :3
+            pass
+        else:
+            #Aquí pon el famoso sintax error o una mamada así amigo jaja
+            pass
+        #Te amito <3
 
     else:
         s = m;
