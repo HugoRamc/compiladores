@@ -1,5 +1,6 @@
 from tokens import *
 import math
+#from precedencia import Precedencia
 
 class Calculadora:
 
@@ -14,6 +15,8 @@ class Calculadora:
 	#Todos los primos regresan el token y regresan verdadero
 	def analizar(self):
 		v = 0.0
+		self.postfija = ""
+		self.prefija = ""
 		valido,v = self.E(v)
 		if valido:
 			tok,lexema = self.lex.getToken()
@@ -55,8 +58,12 @@ class Calculadora:
 			valido,v1 = self.T(v1)
 			if valido:
 				if tok == self.clase_lexema.suma:
+					self.postfija += "+"
+					self.prefija = "+" + self.prefija
 					v = v + v1
 				else:
+					self.postfija += "-"
+					self.prefija = "-" + self.prefija
 					v = v - v1
 				valido,v = self.Ep(v)
 				if valido:
@@ -73,8 +80,12 @@ class Calculadora:
 			valido,v1 = self.F(v1)
 			if valido:
 				if tok == self.clase_lexema.mul:
+					self.postfija += "*"
+					self.prefija = "*" + self.prefija
 					v = v * v1
 				else:
+					self.postfija += "/"
+					self.prefija = "/" + self.prefija
 					v = v / v1
 				valido,v = self.Tp(v)
 				if valido:
@@ -90,6 +101,8 @@ class Calculadora:
 		if tok == self.clase_lexema.exp:
 			valido,v1 = self.F(v1)
 			if valido:
+				self.postfija += "^"
+				self.prefija = "^" + self.prefija
 				v = math.pow(v,v1)
 				valido,v = self.Pp(v)
 				if valido:
@@ -104,6 +117,8 @@ class Calculadora:
 
 		if tok == self.clase_lexema.num:
 			v = float(lexema)
+			self.postfija += lexema
+			self.prefija = lexema + self.prefija
 			return True,v
 
 		elif tok == self.clase_lexema.especial:
@@ -111,6 +126,8 @@ class Calculadora:
 				v = math.e
 			else:
 				v = math.pi
+			self.prefija = lexema + self.prefija
+			self.postfija += lexema
 			return True,v
 
 		elif tok == self.clase_lexema.parI:
@@ -122,6 +139,8 @@ class Calculadora:
 			return False,v
 
 		elif tok == self.clase_lexema.cos:
+			self.postfija += "cos"
+			self.prefija = "cos" + self.prefija
 			tok,_ = self.lex.getToken()
 			if tok == self.clase_lexema.parI:
 				valido,v = self.E(v)
@@ -133,6 +152,8 @@ class Calculadora:
 			return False,v
 
 		elif tok == self.clase_lexema.sin:
+			self.postfija += "sin"
+			self.prefija = "sin" + self.prefija
 			tok,_ = self.lex.getToken()
 			if tok == self.clase_lexema.parI:
 				valido,v = self.E(v)
@@ -144,6 +165,8 @@ class Calculadora:
 			return False,v
 
 		elif tok == self.clase_lexema.tan:
+			self.postfija += "tan"
+			self.prefija = "tan" + self.prefija
 			tok,_ = self.lex.getToken()
 			if tok == self.clase_lexema.parI:
 				valido,v = self.E(v)
@@ -155,6 +178,8 @@ class Calculadora:
 			return False,v
 
 		elif tok == self.clase_lexema.log:
+			self.postfija += "log"
+			self.prefija = "log" + self.prefija
 			tok,_ = self.lex.getToken()
 			if tok == self.clase_lexema.parI:
 				valido,v = self.E(v)
@@ -166,6 +191,8 @@ class Calculadora:
 			return False,v
 
 		elif tok == self.clase_lexema.ln:
+			self.postfija += "ln"
+			self.prefija = "ln" + self.prefija
 			tok,_ = self.lex.getToken()
 			if tok == self.clase_lexema.parI:
 				valido,v = self.E(v)
@@ -177,8 +204,9 @@ class Calculadora:
 			return False,v
 
 		elif tok == self.clase_lexema.raiz:
+			self.postfija += "√"
+			self.prefija = "√" + self.prefija
 			tok,_ = self.lex.getToken()
-			print(tok)
 			if tok == self.clase_lexema.parI:
 				valido,v = self.E(v)
 				if valido:

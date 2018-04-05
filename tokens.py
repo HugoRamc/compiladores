@@ -34,7 +34,7 @@ class Tokens:
         automata.concatenar(automata_punto)
         pila_tokens.append(automata.token*10)
         pila_automatas.append(automata)
-        automata = Automata(["e","p"])
+        automata = Automata(["e","π"])
         pila_tokens.append(automata.token*10)
         pila_automatas.append(automata)
         automata = Automata(["+"])
@@ -58,7 +58,7 @@ class Tokens:
         automata = Automata(["^"]) #token para exponencial
         pila_tokens.append(automata.token*10)
         pila_automatas.append(automata)
-        automata = Automata(["r"]) #token para exponencial
+        automata = Automata(["√"]) #token para exponencial
         pila_tokens.append(automata.token*10)
         pila_automatas.append(automata)
         automata = Automata(["c"]) #Token para el coseno

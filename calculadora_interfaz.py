@@ -14,9 +14,7 @@ def clean_string(cadena):
     aux = ""
     i = 0
     ii = len(c)
-    print("ii: ",ii)
     while i < ii:
-        print(c[i])
         if c[i] == "s" or c[i] == "c" or c[i] == "t":
             aux = aux + c[i]
             i = i + 3
@@ -29,18 +27,14 @@ def clean_string(cadena):
                 aux = aux + "l"
                 i = i + 3
             pass
-        elif c[i] == "√":
-            aux = aux + "r"
-            i+=1
+
         elif c[i] == "x":
             aux = aux + "*"
             i+=1
         elif c[i] == "÷":
             aux = aux + "/"
             i+=1
-        elif c[i] == "π":
-            aux = aux + "p"
-            i+=1
+
         else:
             aux = aux + c[i]
             i+=1
@@ -60,14 +54,13 @@ def popmessage(m,L,frame,Buttons):
         cadena.set(L.cget("text"))
         clean_string(cadena)
         c = cadena.get()
-        print(c)
         lex = Lexico(calculadora.tablaAFD,c)
         calculadora.lex = lex
         valido, v = calculadora.analizar()
-        print(valido)
         v = round(v,5)
-        print(v)
         if valido:
+            print(calculadora.prefija)
+            print(calculadora.postfija)
             L.configure(text = v)
         else:
             L.configure(text = "Syntax Error")

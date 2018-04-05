@@ -3,7 +3,7 @@ from transicion import *
 
 class Automata:
 
-	#variable para controlar los tokens 
+	#variable para controlar los tokens
 	idToken = 0
 	epsilon = ["Ǝ"]
 	vacio = ["Ø"]
@@ -188,14 +188,6 @@ class Automata:
 		return conjSalida
 
 	def analizaCadena(self,cadena):
-		##utilizar los estados self.estados
-		for e in self.estados:
-			print('estado: ',e)
-			for t in self.estados[e].transicionesSalientes:
-				print('simbolos: ',self.estados[e].transicionesSalientes[t].simbolos)
-				print('va a: ',self.estados[e].transicionesSalientes[t].idEstadoDestino.idEstadoGeneral)
-				print('aceptacion: ',self.estados[e].transicionesSalientes[t].idEstadoDestino.estadoAceptacion)
-
 		r = self.cerradura_epsilon(self.estadoInicial)
 		#print(self.estadoInicial.idEstadoGeneral)
 		pila = []
@@ -206,11 +198,6 @@ class Automata:
 				#return False
 			else:
 				r = c
-
-		"""for edo in c:
-			if edo.idEstadoGeneral in self.estadosDeAceptacion:
-				return True
-		return False"""
 
 		if self.isEstadoAceptacion(c):
 			return True
@@ -243,9 +230,6 @@ class Automata:
 			alfaux = list(set.union(set(self.alfabeto),set(automatas[a].alfabeto)))
 
 			self.alfabeto = alfaux
-
-		for i in self.estadosDeAceptacion:
-			print(self.estadosDeAceptacion[i].idEstadoGeneral)
 
 #1 a u b
 #1 kleene a u b

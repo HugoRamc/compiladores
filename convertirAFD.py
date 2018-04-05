@@ -31,7 +31,7 @@ class convertirAFD(object):
 		for item in aux2:
 			straux += str(item)+","
 		straux = straux[0:len(straux)-1]
-		archivo.write(straux + "\n")		
+		archivo.write(straux + "\n")
 
 		for Si in conjuntosSi:
 			aux1 = []
@@ -72,15 +72,10 @@ class convertirAFD(object):
 			for item in aux2:
 				straux += str(item)+","
 			straux = straux[0:len(straux)-1]
-			archivo.write(straux + "\n")				
+			archivo.write(straux + "\n")
 
 			self.tablaTransiciones.append(aux1)
 			self.tablaTransiciones2.append(aux2)
-
-		print(self.AFD.alfabeto.extend("Edo inicial"))
-		#print("Edo final")
-		for fila in self.tablaTransiciones2:
-			print(fila)
 
 		archivo.close()
 
@@ -103,4 +98,3 @@ class convertirAFD(object):
 
 	def generaAlfabeto():
 		pass
-
