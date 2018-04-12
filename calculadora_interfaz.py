@@ -61,6 +61,7 @@ def popmessage(m,L,frame,Buttons):
         clean_string(cadena)
         c = cadena.get()
         print(c)
+        
         lex = Lexico(calculadora.tablaAFD,c)
         calculadora.lex = lex
         valido, v = calculadora.analizar()

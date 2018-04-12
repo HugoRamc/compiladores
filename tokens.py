@@ -75,7 +75,9 @@ class Tokens:
         pila_automatas.append(automata)
         automata = Automata(["n"]) #Token para ln
         pila_tokens.append(automata.token*10)
+
         pila_automatas.append(automata)
+        
         pila_automatas[0].union_especial(pila_automatas[1:])
         AFD = convertirAFD(pila_automatas[0],pila_automatas)
         pila_automatas = []
