@@ -4,10 +4,14 @@ from tkinter import ttk
 from automata import *
 from convertirAFD import *
 from lexico import *
+#from interfaz_expresiones import *
+from convertidorExpresionesAFN import *
 
 pila_automatas = []
 pilaaux = []
 tablaAFD = []
+analizadorExpresiones = convertidorExpresionesAFN() 
+pilaAutomatas = []
 
 def update_AFN(f,laut,m,accion,cadena):
     if m == "Crear AFN Básico":
@@ -97,6 +101,11 @@ def update_AFN(f,laut,m,accion,cadena):
 
             token,lexema = lex.getToken()
             print(token +"-----"+  lexema)
+
+    if m ==  "Expresiones Regulares":
+        pass
+
+
 
     laut.configure(text=str(len(pila_automatas)))
     f.update()
@@ -210,6 +219,72 @@ def validar(m,main,laut):
 def salir(f):
         f.destroy()
 
+def analize(m,f,laut,expresion,cadena):
+    #messagebox.showinfo("Exito", str(cadena))
+    if cadena =="":
+        cadena = "Ǝ"
+
+    lex = Lexico(analizadorExpresiones.tablaAFD,expresion)
+    analizadorExpresiones.lex = lex
+
+    valido, AFN = analizadorExpresiones.analizar()
+    if AFN not in pila_automatas:
+        pila_automatas.append(AFN)
+
+
+    mensaje = ""
+    if valido:
+        mensaje = "Tu expresion pertenece a la gramática"
+        if AFN.analizaCadena(cadena):
+            mensaje += ("\nTu cadena pertenece a la expresion Regular")
+        else:
+            mensaje+= ("\nTu cadena no pertenece a la expresion regular")
+    else:
+        mensaje = ("Tu expresion no pertenece a la gramática + \nCadena no analizada")
+
+    messagebox.showinfo("Éxito",mensaje)
+    laut.configure(text=str(len(pila_automatas)))
+    f.update()
+
+
+def analizarCadena(m,f,laut,cadena):
+    mensaje = ""
+    if pilaAutomatas[len(pilaAutomatas)-1].analizaCadena(cadena):
+        mensaje = "cadena aceptada"
+    else:
+        mensaje =  "cadena no aceptada"
+
+    messagebox.showinfo("Éxito",mensaje)
+    laut.configure(text=str(len(pila_automatas)))
+    f.update()
+
+def expresionesRegulares(m,f,laut):    
+
+    f = Tk()
+    f.geometry('500x320')
+    f.configure(bg = 'LightBlue3')
+    f.title('Expresiones Regulares')
+        #
+    label = Label( f, text="Expresiones Regulares", font = ("Helvetica", "18"),background='LightBlue3')
+    label.place(x = 55,y = 13)
+    field = Entry(f, bd = 0,width=20)
+    field.place(x = 60,y = 50)
+
+    label = Label( f, text="Escribe una cadena para ser analizada por la expresion regular", font = ("Helvetica", "12"),background='LightBlue3')
+    label.place(x = 20,y = 80)
+    field1 = Entry(f, bd = 0,width=20)
+    field1.place(x = 60,y = 100)
+
+
+    button = Button(f, text = "Crear Expresion",command = lambda m = field: analize(m,f,laut,field.get(),field1.get()),highlightbackground='LightBlue3')
+    button.place(x=80,y =130)
+
+    button = Button(f, text = "Analizar Cadena",command = lambda m = field: analizarCadena(m,f,laut,field1.get()),highlightbackground='LightBlue3')
+    button.place(x=230,y =130)
+    f.mainloop()
+
+    
+
 def popmessage(m,aut,f,laut):
     if m == "Crear AFN Básico":
         create_AFN(m,f,laut)
@@ -235,24 +310,37 @@ def popmessage(m,aut,f,laut):
     if m == "Salir":
         salir(f)
 
+    if m == "Expresiones Regulares":
+        expresionesRegulares(m,f,laut)
+        
+
 
 
 def frame():
     tablaAFD.clear()
     aut = 1;
     aut +=1;
-    MsgButtons = ["Crear AFN Básico","Unir AFN's","Union Especial","Concatenar AFN´s","Operación +","Operación *","Operación ?","Validar Cadena","Convertir a AFD","Léxico","Salir"]
+    MsgButtons = ["Crear AFN Básico","Unir AFN's","Union Especial","Concatenar AFN´s","Operación +","Operación *","Operación ?","Validar Cadena","Convertir a AFD","Léxico","Expresiones Regulares","Salir"]
     Buttons = []
     f = Tk()
-    f.geometry('350x400')
+    f.geometry('400x450')
     f.configure(bg = 'LightBlue3')
     f.title('Automatas')
     label = Label( f, text="Automatas", font = ("Helvetica", "18"),background='LightBlue3')
     label.place(x = 50,y = 13)
     label = Label( f, text="Numero de Automatas",background='LightBlue3')
-    label.place(x =160,y = 13)
+    label.place(x =200,y = 13)
+
+    label = Label( f, text="Pila Automatas Expr",background='LightBlue3')
+    label.place(x =200,y = 80)
+
     automatas = Label( f, text="0",background='LightBlue3')
-    automatas.place(x = 320,y = 13)
+    automatas.place(x = 360,y = 13)
+
+    automatas = Label( f, text="0",background='LightBlue3')
+    automatas.place(x = 360,y = 80)
+
+
     for i in range(len(MsgButtons)):
         Buttons.append(Button(f, text = MsgButtons[i],command = lambda m = MsgButtons[i]: popmessage(m,aut,f,automatas),highlightbackground='LightBlue3'))
         Buttons[i].place(x = 30, y = 39 + i*30)

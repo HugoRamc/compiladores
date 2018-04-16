@@ -54,11 +54,9 @@ def popmessage(m,L,frame,Buttons):
         cadena.set(L.cget("text"))
         clean_string(cadena)
         c = cadena.get()
-<<<<<<< HEAD
         print(c)
         
-=======
->>>>>>> origin/master
+
         lex = Lexico(calculadora.tablaAFD,c)
         calculadora.lex = lex
         valido, v = calculadora.analizar()
