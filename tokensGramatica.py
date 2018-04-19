@@ -34,12 +34,12 @@ class tokensGramatica:
         pila_tokens.append((automata.token*10))
         pila_automatas.append(automata)
         #3 SIMB
-        #automata = Automata(["'"])
-        #automata.cerradura_interrogacion()
         automata = Automata(["a","A","b","B","c","C","d","D","e","E","f","F","g","G","h","H","i","I","j","J","k","K","l","L","m","M","n","N","ñ","Ñ","o","O","p","P","q","Q","r","R","s","S","t","T","u","U","v","V","w","W","x","y","Y","z","Z"])
-        automata.cerradura_positiva()
-        #automata2.concatenar(automata)
-        #automata.unir(automata2)
+        automata2 = Automata(["0","1","2","3","4","5","6","7","8","9"])
+        automata3 = Automata(["a","A","b","B","c","C","d","D","e","E","f","F","g","G","h","H","i","I","j","J","k","K","l","L","m","M","n","N","ñ","Ñ","o","O","p","P","q","Q","r","R","s","S","t","T","u","U","v","V","w","W","x","y","Y","z","Z"])
+        automata2.unir(automata3)
+        automata2.cerradura_interrogacion()
+        automata.concatenar(automata2)
         pila_tokens.append(automata.token*10)
         pila_automatas.append(automata)
 
