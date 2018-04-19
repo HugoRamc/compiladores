@@ -14,6 +14,7 @@ class convertidorGramaticasAFN:
 
 	#Todos los primos regresan el token y regresan verdadero
 	def analizar(self):
+		print("*****************************************************************************")
 		print("\nOperacion analizar")
 		valido = self.G()
 		if valido:
