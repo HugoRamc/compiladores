@@ -17,8 +17,10 @@ def analize(expresion):
 
     if valido:
         print("Tu expresion pertenece a la gramática")
+        messagebox.showinfo("Exito", "Tu cadena pertenece a la gramatica")
     else:
         print("Tu expresion no pertenece a la gramática")
+        messagebox.showinfo("Error", "Tu cadena no pertenece a la gramatica")
 
 
 def frame():

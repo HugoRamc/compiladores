@@ -52,7 +52,7 @@ class convertidorGramaticasAFN:
 
 		tok, lexema = self.lex.getToken()
 		if len(lexema) == 0:
-			print("YA NO HAY NADA :V")
+			print("El resto de la cadena esta vacio")
 			self.lex.getEstado()
 			return True
 
@@ -67,7 +67,6 @@ class convertidorGramaticasAFN:
 				if valido:
 					return True
 				return False	
-			#self.lex.regresarToken(lexema)
 			return False	
 		self.lex.setEstado()
 		return False
@@ -85,7 +84,6 @@ class convertidorGramaticasAFN:
 				if valido:
 					return True
 				return False	
-			#self.lex.regresarToken(lexema)
 			return False	
 		return False	
 
@@ -97,9 +95,7 @@ class convertidorGramaticasAFN:
 		print(tok)
 		if tok == self.clase_lexema.SIMB:
 			return True
-		print("LI dio False")
 		return False
-		#self.lex.regresarToken(lexema)
 
 	# ListaLadosDerechos→ LadoDerecho ListaLadosDerechos′
 	def listaLadosDerechos(self):
@@ -140,7 +136,6 @@ class convertidorGramaticasAFN:
 			if valido:
 				return True
 			return False	
-		#self.lex.regresarToken(lexema)
 		return False
 
 	# LadoDerecho′→SIMBOLO LadoDerecho′ | ϵ
@@ -156,32 +151,3 @@ class convertidorGramaticasAFN:
 			return False
 		self.lex.regresarToken(lexema)
 		return True
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
