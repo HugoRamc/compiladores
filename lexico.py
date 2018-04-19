@@ -2,6 +2,7 @@ class Lexico(object):
 	"""docstring for lexico"""
 	def __init__(self,tablaAFD,cadena):
 		self.cadena = cadena
+		self.estado = ""
 		self.tablaAFD = tablaAFD
 
 
@@ -20,10 +21,17 @@ class Lexico(object):
 		lexema = self.cadena[:pos]
 		self.cadena = self.cadena[pos:]
 
+		print("Cadena: "+lexema)
 		return edo,lexema
 
 	def regresarToken(self,lex):
 		self.cadena = lex+self.cadena
+
+	def setEstado(self):
+		self.estado = self.cadena
+	
+	def getEstado(self):
+		return self.estado
 
 	def validaCadena(self,cadena):
 	    #print("Hola cadena "+cadena+"\n")
