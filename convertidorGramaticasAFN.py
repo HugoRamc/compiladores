@@ -49,6 +49,14 @@ class convertidorGramaticasAFN:
 	def listaReglasP(self):
 		print("\nOperacion listaReglasP")
 		self.lex.getEstado()
+
+		tok, lexema = self.lex.getToken()
+		if len(lexema) == 0:
+			print("YA NO HAY NADA :V")
+			self.lex.getEstado()
+			return True
+
+		self.lex.regresarToken(lexema)
 		valido = self.reglas()
 		if valido:
 			tok, lexema = self.lex.getToken()
@@ -62,7 +70,7 @@ class convertidorGramaticasAFN:
 			#self.lex.regresarToken(lexema)
 			return False	
 		self.lex.setEstado()
-		return True	
+		return False
 
 	# Reglas→LadoIzquierdo  Flecha  ListaLadosDerechos
 	def reglas(self):
@@ -89,6 +97,7 @@ class convertidorGramaticasAFN:
 		print(tok)
 		if tok == self.clase_lexema.SIMB:
 			return True
+		print("LI dio False")
 		return False
 		#self.lex.regresarToken(lexema)
 
