@@ -1,0 +1,22 @@
+python3 TablaPointers.py "Sb→ I Sb';" "Sb'→ = I Sb'| ep;" "I→ Bt I';" "I'→ > Bt I'| ep;" "Bt→ Bf Bt';" "Bt'→ v Bf Bt'| ep" "Bf→ Bs Bf';" "Bf'→ ^ Bs Bf'| ep;" "Bs→ Bp| ¬ Bp;" "Bp→ Lv| i| ( Sb );" "Lv→ True| False;"
+
+
+python3 TablaPointers.py "E→ T E';" "E'→ + T E'| - T E'| ep;" "T→ F T';" "T'→ * F T'| / F T'| ep;" "F→ ( E )| num;"
+
+
+python3 TablaPointers.py "G→ ListaReglas;" "ListaReglas→ Regla PC ListaReglas';" "ListaReglas'→ Regla PC ListaReglas'| ep;" "Regla→ LadoIzquierdo FLECHA ListaLadosDerecho;" "LadoIzquierdo→ SIMBOLO;" "ListaLadosDerecho→ LadoDerecho ListaLadosDerecho';" "ListaLadosDerecho'→ OR LadoDerecho ListaLadosDerecho'| ep;" "LadoDerecho→ SIMBOLO LadoDerecho';" "LadoDerecho'→ SIMBOLO LadoDerecho'| ep;"
+
+
+"E→ T E';"
+"E'→ + T E'| - T E'| ep;"
+"T→ F T';" "T'→ * F T'| / F T'| ep;"
+"F→ ( E )| num;"
+
+E→ T E';
+E'→ + T E'| - T E'| ep;
+T→ F T';
+T'→ * F T'| / F T'| ep;
+F→ ( E )| num;
+
+
+( num + num ) * num - num $
