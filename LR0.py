@@ -170,10 +170,8 @@ class LR0(object):
 					for sim in simbs:
 						j = fila.index(sim)
 						#print("Coordenadas: "+str(i) + " , "+str(j))
-						if reglaAux not in Tabla:
-							numRegla = 0
-						else:
-							numRegla = Tabla.index(reglaAux)
+						
+						numRegla = Tabla.index(reglaAux)
 						
 						TablaLR0[i][j] = str("R")+str(numRegla)
 
@@ -187,13 +185,16 @@ cadena = "( num + num ) * num - num $"
 cadena = cadena.split(" ")
 Regla = sys.argv[1:]
 
+
 #utilizamos los metodos definidos en la clase TablaPointersClass para obtener el formato de las reglas
 LR0 = LR0()
 obj = TablaPointersClass(Regla)
 Tabla = obj.createNodes(Regla) #esta tabla contiene todas las reglas pero sin punto
 obj.blank(Tabla)
+
 Tabla = LR0.gramaticaExtendida(Tabla)
 obj.resetsimbolos(Tabla)
+
 NoTerminalesA = obj.NoTerminalesA
 TerminalesA = obj.TerminalesA
 simbolos = NoTerminalesA + TerminalesA

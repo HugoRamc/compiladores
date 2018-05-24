@@ -6,10 +6,8 @@ class TablaPointersClass(object):
 	def __init__(self,Regla):
 		self.Tabla = self.createNodes(Regla)
 		self.blank(self.Tabla)
-		self.NoTerminalesA = self.NoTerminales(self.Tabla)
-		self.TerminalesA = self.Terminales(self.Tabla)
-		self.NoTerminalesA = list(set(self.NoTerminalesA))
-		self.TerminalesA = list(set(self.TerminalesA))
+		
+		self.resetsimbolos(self.Tabla)
 	
 	def resetsimbolos(self,Tabla):
 		self.NoTerminalesA = self.NoTerminales(Tabla)
@@ -134,6 +132,26 @@ class TablaPointersClass(object):
 	    self.blank(q)
 	    for i in range(len(q)):
 	        self.Follow(q[i][0],NodeTables,Simbs)
+
+	def Follow2(self,simbolo,NodeTables,simbs):
+		if simbolo == NodeTables[0][0]:
+			simbs.append("$")
+		else:
+			for regla in NodeTables:
+				if simbolo in regla:
+					if regla.index(simbolo) > 0: #buscamos del lado derecho
+						#si está en la ultima posicion
+						if simbolo == regla[len(regla)-1]:
+							self.Follow(regla[0],NodeTables,simbs)
+						else:
+							#si no esta al final moverse uno y calcular el first
+							self.First(regla[regla.index(simbolo)+1],NodeTables,simbs)
+
+
+
+
+
+
 
 	def GenerateLL1(self,NodeTables,NoTerminalesA,TerminalesA):
 	    re = []
