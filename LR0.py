@@ -1,9 +1,10 @@
 from TablaPointersClass import *
 class LR0(object):
 	"""docstring for LR0"""
-	def __init__(self):
+	def __init__(self,Regla):
 		self.LR0punto = "."
 		self.pesos = "$"
+		self.obj = TablaPointersClass(Regla)
 		
 	def cerradura(self,item,salida):
 		#print(type(item))
@@ -17,15 +18,15 @@ class LR0(object):
 				print(item)
 				noterm = item[item.index(self.LR0punto)+1]
 				#si es no terminal realizar la cerradura de 
-				if noterm in NoTerminalesA:
-					for regla in items:
-
+				if noterm in self.NoTerminalesA:
+					for regla in self.items:
+						#si la regla coincide
 						if regla[0] == noterm:
 							if regla not in salida:
 								salida.append(regla)
 
 						#una vez agregada la regla a la lista se checa si esa regla deriva a otras reglas
-						regs = self.cerradura(regla,salida)
+						self.cerradura(regla,salida)
 
 					
 				else:
@@ -111,13 +112,14 @@ class LR0(object):
 			print(newItem)
 			salida.append(newItem)
 
+		self.items = salida
 		return salida
 
 	def createLR0(self,items):
 		estadosSi = []
 		edos = []
 		tablaLR0 = []
-		fila0 = list(" ")+simbolos
+		fila0 = list(" ")+self.simbolos
 		tablaLR0.append(fila0)
 		print("estadoInicial")
 		S0 = self.cerradura(items[0],edos)
@@ -127,7 +129,7 @@ class LR0(object):
 		for Si in estadosSi:
 			filaTabla = []
 			filaTabla.append(estadosSi.index(Si))
-			for simbolo in simbolos:
+			for simbolo in self.simbolos:
 				edo = self.irA(simbolo,Si)
 
 				if not edo:#si se encuentra vacio 
@@ -136,7 +138,7 @@ class LR0(object):
 					if edo not in estadosSi:
 						estadosSi.append(edo)
 
-					if simbolo in NoTerminalesA:
+					if simbolo in self.NoTerminalesA:
 						filaTabla.append(estadosSi.index(edo))
 					else:
 						filaTabla.append("d"+str(estadosSi.index(edo)))
@@ -147,7 +149,8 @@ class LR0(object):
 
 		#una vez añadidas las reducciones 
 
-		self.imprimirTabla(tablaLR0)
+		#self.imprimirTabla(tablaLR0)
+		return tablaLR0
 		
 
 	def addReducciones(self,estados,TablaLR0):
@@ -160,7 +163,7 @@ class LR0(object):
 					print(item)
 					simbs = []
 					print("Follow de: "+str(item[0]))
-					obj.Follow(item[0],TablaLR0,simbs)
+					self.obj.Follow(item[0],self.Tabla,simbs)
 					print(simbs)
 					reglaAux = item.copy()
 					reglaAux.remove(".")
@@ -171,15 +174,26 @@ class LR0(object):
 						j = fila.index(sim)
 						#print("Coordenadas: "+str(i) + " , "+str(j))
 						
-						numRegla = Tabla.index(reglaAux)
+						numRegla = self.Tabla.index(reglaAux)
 						
 						TablaLR0[i][j] = str("R")+str(numRegla)
 
 	def imprimirTabla(self,tablaLR0):
 		print("Imprimir Tabla")
-		tablaLR0 = obj.TableFormat(tablaLR0)
-		obj.printTable(tablaLR0)
+		tablaLR0 = self.obj.TableFormat(tablaLR0)
+		self.obj.printTable(tablaLR0)
 
+	def setValores(self,Tabla,TerminalesA,NoTerminalesA):
+		self.Tabla = Tabla
+		self.TerminalesA = TerminalesA
+		self.NoTerminalesA = NoTerminalesA
+		self.simbolos = self.NoTerminalesA + self.TerminalesA
+
+	def analizarCadena(self,cadena):
+		pila = ["$",0]
+		
+		
+"""
 #datos de entrada cadena y reglas
 cadena = "( num + num ) * num - num $"
 cadena = cadena.split(" ")
@@ -187,21 +201,21 @@ Regla = sys.argv[1:]
 
 
 #utilizamos los metodos definidos en la clase TablaPointersClass para obtener el formato de las reglas
-LR0 = LR0()
-obj = TablaPointersClass(Regla)
-Tabla = obj.createNodes(Regla) #esta tabla contiene todas las reglas pero sin punto
-obj.blank(Tabla)
+LR0 = LR0(Regla)
+Tabla = LR0.obj.createNodes(Regla) #esta tabla contiene todas las reglas pero sin punto
+LR0.obj.blank(Tabla)
 
 Tabla = LR0.gramaticaExtendida(Tabla)
-obj.resetsimbolos(Tabla)
+LR0.obj.resetsimbolos(Tabla)
 
-NoTerminalesA = obj.NoTerminalesA
-TerminalesA = obj.TerminalesA
-simbolos = NoTerminalesA + TerminalesA
+NoTerminalesA = LR0.obj.NoTerminalesA
+TerminalesA = LR0.obj.TerminalesA
+LR0.setValores(Tabla,TerminalesA,NoTerminalesA)
+#simbolos = NoTerminalesA + TerminalesA
 
-
+LR0.obj.printTable(Tabla)
 
 #iniciamos proceso de creacion de tabla LR0
 
 items = LR0.createItems(Tabla)
-tablaLR0 = LR0.createLR0(items)
+tablaLR0 = LR0.createLR0(items)"""

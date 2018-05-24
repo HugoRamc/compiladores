@@ -110,7 +110,8 @@ class TablaPointersClass(object):
 	def Follow(self,NodeTable,NodeTables,Simbs):
 	    aux = []
 	    if NodeTable == NodeTables[0][0]:
-	        Simbs.append("$")
+	        if "$" not in Simbs:
+	        	Simbs.append("$")
 	    for i in range(len(NodeTables)):
 	        for j in range(1,len(NodeTables[i])):
 	            if NodeTables[i][j] == NodeTable:
@@ -132,25 +133,6 @@ class TablaPointersClass(object):
 	    self.blank(q)
 	    for i in range(len(q)):
 	        self.Follow(q[i][0],NodeTables,Simbs)
-
-	def Follow2(self,simbolo,NodeTables,simbs):
-		if simbolo == NodeTables[0][0]:
-			simbs.append("$")
-		else:
-			for regla in NodeTables:
-				if simbolo in regla:
-					if regla.index(simbolo) > 0: #buscamos del lado derecho
-						#si está en la ultima posicion
-						if simbolo == regla[len(regla)-1]:
-							self.Follow(regla[0],NodeTables,simbs)
-						else:
-							#si no esta al final moverse uno y calcular el first
-							self.First(regla[regla.index(simbolo)+1],NodeTables,simbs)
-
-
-
-
-
 
 
 	def GenerateLL1(self,NodeTables,NoTerminalesA,TerminalesA):
