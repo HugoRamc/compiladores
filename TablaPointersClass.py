@@ -10,9 +10,17 @@ class TablaPointersClass(object):
 		self.TerminalesA = self.Terminales(self.Tabla)
 		self.NoTerminalesA = list(set(self.NoTerminalesA))
 		self.TerminalesA = list(set(self.TerminalesA))
+	
+	def resetsimbolos(self,Tabla):
+		self.NoTerminalesA = self.NoTerminales(Tabla)
+		self.TerminalesA = self.Terminales(Tabla)
+		self.NoTerminalesA = list(set(self.NoTerminalesA))
+		self.TerminalesA = list(set(self.TerminalesA))
+		
+
+	def generateLL1(self):
 		self.LL1 = self.GenerateLL1(self.Tabla,self.NoTerminalesA,self.TerminalesA)
 		self.printTable(self.LL1)
-		
 
 	def analizarCadena(self,cadena):
 		aux = self.analizar(cadena,self.NoTerminalesA,self.TerminalesA)
@@ -27,6 +35,12 @@ class TablaPointersClass(object):
 	def printTable(self,Tabla):
 	    for i in Tabla:
 	        print(i)
+
+	def TableFormat(self,Tabla):
+		for i in range(len(Tabla)):
+			for j in range(len(Tabla[i])):
+				Tabla[i][j] = '{:^7}'.format(str(Tabla[i][j]))
+		return Tabla
 
 	def createNodes(self,Regla):
 	    Tabla = []
@@ -94,6 +108,7 @@ class TablaPointersClass(object):
 	            aux.append(NodeTables[i])
 	    return aux
 
+	#esta funcion recibe el simbolo, las reglas y los conjuntos de simbolos follow
 	def Follow(self,NodeTable,NodeTables,Simbs):
 	    aux = []
 	    if NodeTable == NodeTables[0][0]:
@@ -211,6 +226,8 @@ class TablaPointersClass(object):
 	                regla = list(reversed(regla[1:]))
 	                auxpila = auxpila[:-1]
 	                self.addtoPila(auxpila,regla)
+
+
 
 		#self.printTable(header)
 

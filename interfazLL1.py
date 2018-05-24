@@ -21,6 +21,8 @@ class interfazLL1(object):
 
 
         self.TLL1 = TablaPointersClass(self.reglas)
+        self.TTL1.generateLL1()
+        print(self.TLL1.Tabla)
         mensaje = "Tabla LL1 creada exitosamente \n"
         
         if self.TLL1.analizarCadena(self.cadena):

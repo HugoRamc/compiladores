@@ -43,6 +43,7 @@ def Terminales(Tabla):
             if Tabla[i][j] not in NoTerminalesA and Tabla[i][j]!="ep":
                 TerminalesA.append(Tabla[i][j])
     return TerminalesA
+#esta funcion recibe el simbolo, todas las reglas y la lista de simbolos que llevan
 def First(NodeTable,NodeTables,Simbs):
 
     if NodeTable[0][1] == "ep":
