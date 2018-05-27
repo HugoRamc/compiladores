@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 from LR0 import *
+import copy
 
 class interfazLL1(object):
     """docstring for interfaz_expresiones"""
@@ -14,42 +15,52 @@ class interfazLL1(object):
 
     def analize(self,reglas,cadena):
         self.reglas = reglas.split("\n")
-        self.cadena = cadena.split(" ")
         self.reglas = self.reglas[:len(self.reglas)-1]
         print(str(type(self.reglas)) + str(len(self.reglas)))
         print(self.reglas)
 
 
         self.LR01 = LR0(self.reglas)
-        Tabla = self.LR01.obj.createNodes(self.reglas) #esta tabla contiene todas las reglas pero sin punto
-        self.LR01.obj.blank(Tabla)
 
-        Tabla = self.LR01.gramaticaExtendida(Tabla)
-        self.LR01.obj.resetsimbolos(Tabla)
+        self.Tabla = self.LR01.obj.createNodes(self.reglas) #esta tabla contiene todas las reglas pero sin punto
+        self.LR01.obj.blank(self.Tabla)
+
+        self.Tabla = self.LR01.gramaticaExtendida(self.Tabla)
+        self.LR01.obj.resetsimbolos(self.Tabla)
 
         NoTerminalesA = self.LR01.obj.NoTerminalesA
         TerminalesA = self.LR01.obj.TerminalesA
-        self.LR01.setValores(Tabla,TerminalesA,NoTerminalesA)
+        TerminalesA.append("$")
+        self.LR01.setValores(self.Tabla,TerminalesA,NoTerminalesA)
         #simbolos = NoTerminalesA + TerminalesA
 
-        self.LR01.obj.printTable(Tabla)
+        self.LR01.obj.printTable(self.Tabla)
 
         #iniciamos proceso de creacion de tabla self.LR01
-        items = self.LR01.createItems(Tabla)
-        tablaLR0 = self.LR01.createLR0(items)
-        self.LR01.imprimirTabla(tablaLR0)
+        items = self.LR01.createItems(self.Tabla)
+        self.tablaLR0 = self.LR01.createLR0(items)
+
+        
+        copia = copy.deepcopy(self.tablaLR0)
+        self.LR01.imprimirTablaf(copia)
+
+        self.analizaCadena(cadena)
         
 
     def analizaCadena(self,cadena):
-        self.cadena = cadena.split(" ")
-        
+        #self.cadena = cadena.split(" ")
+        print(cadena)
+        cadena = cadena.split(" ")
         mensaje = ""
-        if self.LR01.analizarCadena(self.cadena):
+        if self.LR01.analizarCadena(cadena,self.tablaLR0,self.Tabla):
             mensaje += "Cadena Aceptada"
         else:
             mensaje += "Cadena no aceptada"
         
+        self.LR01.imprimirTablaf(self.LR01.tablaImprime)
         messagebox.showinfo("Éxito",mensaje)
+
+
 
 
     def frame(self):
