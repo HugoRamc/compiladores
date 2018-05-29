@@ -163,6 +163,7 @@ class LR0(object):
 
 	def addReducciones(self,estados,TablaLR0):
 		fila = TablaLR0[0]
+		flag = True
 		for estado in estados:
 			print(estado)
 			for item in estado:
@@ -180,11 +181,11 @@ class LR0(object):
 					
 					for sim in simbs:
 						j = fila.index(sim)
+						if TablaLR0[i][j] == -1 or TablaLR0[i][j] == "-1":
 						#print("Coordenadas: "+str(i) + " , "+str(j))
-						
-						numRegla = self.Tabla.index(reglaAux)
-						
-						TablaLR0[i][j] = str("R")+str(numRegla)
+							numRegla = self.Tabla.index(reglaAux)
+							TablaLR0[i][j] = str("R")+str(numRegla)
+								
 
 	def imprimirTablaf(self,tablaLR0):
 		print("Imprimir Tabla")
