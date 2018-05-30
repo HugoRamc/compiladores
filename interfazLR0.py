@@ -31,6 +31,8 @@ class interfazLL1(object):
         NoTerminalesA = self.LR01.obj.NoTerminalesA
         TerminalesA = self.LR01.obj.TerminalesA
         TerminalesA.append("$")
+        NoTerminalesA = ['Ep','E','T','F']
+        TerminalesA = ['+','-','*','/','(',')','num','$']
         self.LR01.setValores(self.Tabla,TerminalesA,NoTerminalesA)
         #simbolos = NoTerminalesA + TerminalesA
 
@@ -57,7 +59,7 @@ class interfazLL1(object):
         else:
             mensaje += "Cadena no aceptada"
         
-        self.LR01.imprimirTablaf(self.LR01.tablaImprime)
+        #self.LR01.imprimirTablaf(self.LR01.tablaImprime)
         messagebox.showinfo("Éxito",mensaje)
 
 

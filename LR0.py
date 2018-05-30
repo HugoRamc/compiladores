@@ -6,36 +6,31 @@ class LR0(object):
 		self.pesos = "$"
 		self.obj = TablaPointersClass(Regla)
 		
-	def cerradura(self,item,salida):
-		#print(type(item))
-		#si el punto está en la ultima posicion
+	def cerradura(self,item,salida,cerraduraDone):
+		#si el item no está en la salida
+		
 		if item not in salida:
 			salida.append(item)
-			if self.LR0punto == item[len(item)-1]:
-				salida.append(item)
+				
+
+		if self.LR0punto != item[len(item)-1]:
+			#print("El item es")
+			#print(item)
+			noterm = item[item.index(self.LR0punto)+1]
+			#si es no terminal realizar la cerradura de ese item
+			if noterm in self.NoTerminalesA:
+				for regla in self.items:
+					#si el lado izquierdo coincide con el item
+					if regla[0] == noterm:
+						if regla not in salida:
+							salida.append(regla)
+						
+						if regla not in cerraduraDone:
+							cerraduraDone.append(regla)
+							self.cerradura(regla,salida,cerraduraDone)
 			else:
-				print("El item es")
-				print(item)
-				noterm = item[item.index(self.LR0punto)+1]
-				#si es no terminal realizar la cerradura de 
-				if noterm in self.NoTerminalesA:
-					for regla in self.items:
-						#si la regla coincide
-						if regla[0] == noterm:
-							if regla not in salida:
-								salida.append(regla)
-
-						#una vez agregada la regla a la lista se checa si esa regla deriva a otras reglas
-						self.cerradura(regla,salida)
-
-					
-				else:
-					if item not in salida:
-						salida.append(item)
-
-			#for elemento in salida:
-				#print(elemento)
-		return salida
+				if item not in salida:
+					salida.append(item)
 
 
 
@@ -53,29 +48,34 @@ class LR0(object):
 					newItem = regla[0:regla.index(self.LR0punto)]
 					newItem.append(regla[regla.index(self.LR0punto)+1])
 					newItem.append(self.LR0punto)
+
 					newItem = newItem + regla[regla.index(self.LR0punto)+2:]
 
 					salida.append(newItem)
 
-		print("Resultado de mover con: " + simbolo)
-		print(salida)
+		if salida:
+			print("Resultado de mover con: " + simbolo)
+			print(salida)
 		return salida
 
 
 
 	def irA(self,simbolo,reglas):
-		sal = []
 		salida = []
 
 		mov = self.mover(simbolo,reglas)
 		if len(mov) > 0:
 			#print("tiene algo la lista")
 			#print(mov)
-			
 			for items in mov:
 				sal = []
-				sal1 = self.cerradura(items,sal)
-				salida = salida + sal1
+				cerr = [items]
+				self.cerradura(items,sal,cerr)
+				#salida = salida + sal
+				for it in sal:
+					if it not in salida:
+						salida.append(it)
+
 				#salidaux = list(set.union(set(salida),set(sal1)))
 				#salida = salidaux
 		else:
@@ -85,7 +85,7 @@ class LR0(object):
 
 	def gramaticaExtendida(self,TablaNodes):
 		salida = []
-		reglaInicial = [str(TablaNodes[0][0]) + "'",str(TablaNodes[0][0])]
+		reglaInicial = [str(TablaNodes[0][0]) + "p",str(TablaNodes[0][0])]
 		salida.append(reglaInicial)
 
 		salida = salida + TablaNodes
@@ -117,15 +117,21 @@ class LR0(object):
 		return salida
 
 	def createLR0(self,items):
+		#print(items)
 		estadosSi = []
-		edos = []
+		S0 = []
 		tablaLR0 = []
 		fila0 = list(" ")+self.simbolos
 		
 		
 		tablaLR0.append(fila0)
-		print("estadoInicial")
-		S0 = self.cerradura(items[0],edos)
+		print("primer item")
+		print(items[0])
+		cerr = [items[0]]
+		self.cerradura(items[0],S0,cerr)
+		print(S0)
+		#tablaLR0 = []
+		#return tablaLR0
 
 		estadosSi.append(S0)
 		flag = True
@@ -152,6 +158,11 @@ class LR0(object):
 
 			tablaLR0.append(filaTabla)
 
+		print("Estados")
+		for edo in estadosSi:
+			print(edo)
+
+
 		#ahora a hacer las reducciones
 		self.addReducciones(estadosSi,tablaLR0)
 
@@ -159,23 +170,29 @@ class LR0(object):
 
 		#self.imprimirTabla(tablaLR0)
 		return tablaLR0
-		
+
 
 	def addReducciones(self,estados,TablaLR0):
+		print("Agregar Reducciones\n")
 		fila = TablaLR0[0]
 		flag = True
 		for estado in estados:
-			print(estado)
+			#print(estado)
 			for item in estado:
 				if self.LR0punto == item[len(item)-1]:
-					#print("Tenemos un Follow en el edo: "+str(estados.index(estado)))
-					#print(item)
+					print("Tenemos un Follow en el edo: "+str(estados.index(estado)))
+					print(estados[estados.index(estado)])
+					print("El simbolo a sacar follow es: ")
+					print(item[0])
 					simbs = []
-					#print("Follow de: "+str(item[0]))
+					
 					self.obj.Follow(item[0],self.Tabla,simbs)
-					#print(simbs)
+					simbs = self.limpiarFollow(simbs)
+					print(simbs)
 					reglaAux = item.copy()
-					reglaAux.remove(".")
+					reglaAux.remove(self.LR0punto)
+					
+
 
 					i = estados.index(estado)+1
 					
@@ -185,6 +202,15 @@ class LR0(object):
 						#print("Coordenadas: "+str(i) + " , "+str(j))
 							numRegla = self.Tabla.index(reglaAux)
 							TablaLR0[i][j] = str("R")+str(numRegla)
+						else:
+							print("Superposition")
+
+	def limpiarFollow(self,simbs):
+		salida = []
+		for sim in simbs:
+			if sim not in salida:
+				salida.append(sim)
+		return salida
 								
 
 	def imprimirTablaf(self,tablaLR0):
@@ -215,6 +241,11 @@ class LR0(object):
 			#checar si el utlimo simbolo de la pila es un numero
 			
 			if type(pila[len(pila)-1]) == int:
+
+				if pila[len(pila)-1] == -1 or pila[len(pila)-1] == "-1":
+					return False
+
+
 				#obtenemos la coordenada de la tabla
 				i = int(pila[len(pila)-1])+1#se le suma uno a la fila porque la primera fila es de los simbolos
 				j = fila.index(cadena[0])
@@ -238,11 +269,11 @@ class LR0(object):
 
 						reg = reglas[numRegla]
 						numReducciones = 2 * (len(reg)-1)#se le resta uno porque se quita el lado izquierdo
-						print("Regla con reducciones: "+ str(numReducciones))
-						print(reg)
+						#print("Regla con reducciones: "+ str(numReducciones))
+						#print(reg)
 						#print("pila Antes")
 						#print(pila)
-
+						print("Reducciones: "+str(numReducciones))
 
 						pila = pila[0:len(pila)-numReducciones]
 						# y se agrega el lado derecho de la recla
@@ -268,7 +299,7 @@ class LR0(object):
 				accion = str(tablaLR0[ip][jp])
 				pila.append(int(accion))#agregamos el numero del estado que sigue
 
-			#print([pila,accion,str(cadena)])
+			print([pila,accion,str(cadena)])
 			self.tablaImprime.append([pila,accion,str(cadena)])
 
 		

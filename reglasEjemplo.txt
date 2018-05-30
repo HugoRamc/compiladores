@@ -52,6 +52,9 @@ E→ E + T| T;
 T→ T * F| F;
 F→ ( E )| num;
 
+E→ E + T| T;
+T→ ( E )| num;
+
 
 
 
