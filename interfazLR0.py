@@ -31,8 +31,8 @@ class interfazLL1(object):
         NoTerminalesA = self.LR01.obj.NoTerminalesA
         TerminalesA = self.LR01.obj.TerminalesA
         TerminalesA.append("$")
-        NoTerminalesA = ['Ep','E','T','F']
-        TerminalesA = ['+','-','*','/','(',')','num','$']
+        #NoTerminalesA = ['Ep','E','T','F']
+        #TerminalesA = ['+','-','*','/','(',')','num','$']
         self.LR01.setValores(self.Tabla,TerminalesA,NoTerminalesA)
         #simbolos = NoTerminalesA + TerminalesA
 

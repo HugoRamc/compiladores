@@ -255,13 +255,13 @@ class LR0(object):
 					return False
 				elif accion[0] == "d" or accion[0] == 'd':#si la casilla tiene un desplazamiento
 					pila.append(cadena[0])#agregamos el primer elemento de la cadena
-					pila.append(int(accion[1]))#agregamos el numero del estado que sigue
+					pila.append(int(accion[1:]))#agregamos el numero del estado que sigue
 
 					cadena = cadena[1:] #eliminamos el elemento de la fila
 					
 				elif accion[0] == "R" or accion[0] == 'R':#la casilla tiene una reduccion
 					#print("Hay reduccion :D")
-					numRegla = int(accion[1])#el segundo caracter de la accion es el numero de la regla de la cual hay que hacer reduccion en la pila
+					numRegla = int(accion[1:])#el segundo caracter de la accion es el numero de la regla de la cual hay que hacer reduccion en la pila
 					#print(numRegla)
 					if numRegla == 0:#cadena aceptada
 						return True
