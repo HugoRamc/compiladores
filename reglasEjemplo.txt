@@ -7,7 +7,7 @@ python3 LR1.py "E→ T E';" "E'→ + T E'| - T E'| ep;" "T→ F T';" "T'→ * F 
 
 python3 TablaPointers.py "E→ T E';" "E'→ + T E'| - T E'| ep;" "T→ F T';" "T'→ * F T'| / F T'| ep;" "F→ ( E )| num;"
 
-python3 LR1.py "E→ E + T| T;" "T→ T * F| F;" "F→ ( E )| num;"
+python3 LR1.py "E→ E + T| T;" "T→ T * F| F;" "F→ ( E )| n;"
 python3 LR0.py "E→ E + T| E - T| T;" "T→ T * F| T / F| F;" "F→ ( E )| num;"
 
 
@@ -57,6 +57,10 @@ F→ ( E )| num;
 
 E→ E + T| T;
 T→ ( E )| num;
+
+S→ E = E| f;
+E→ E + T| T;
+T→ T * F| f;
 
 
 
