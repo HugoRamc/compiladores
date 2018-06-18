@@ -3,12 +3,15 @@ python3 TablaPointers.py "Sb→ I Sb';" "Sb'→ = I Sb'| ep;" "I→ Bt I';" "I'�
 
 python3 LR0.py "E→ T E';" "E'→ + T E'| - T E'| ep;" "T→ F T';" "T'→ * F T'| / F T'| ep;" "F→ ( E )| num;"
 
-python3 LR0.py "E→ T E';" "E'→ + T E'| - T E'| ep;" "T→ F T';" "T'→ * F T'| / F T'| ep;" "F→ ( E )| num;"
+python3 LR1.py "E→ T E';" "E'→ + T E'| - T E'| ep;" "T→ F T';" "T'→ * F T'| / F T'| ep;" "F→ ( E )| num;"
 
 python3 TablaPointers.py "E→ T E';" "E'→ + T E'| - T E'| ep;" "T→ F T';" "T'→ * F T'| / F T'| ep;" "F→ ( E )| num;"
 
-python3 LR0.py "E→ E + T| T;" "T→ T * F| F;" "F→ ( E )| num;"
+python3 LR1.py "E→ E + T| T;" "T→ T * F| F;" "F→ ( E )| num;"
 python3 LR0.py "E→ E + T| E - T| T;" "T→ T * F| T / F| F;" "F→ ( E )| num;"
+
+
+python3 LR1.py "S→ E = E| f;" "E→ E + T| T;" "T→ T * F| f;"
 
 
 python3 TablaPointers.py "G→ ListaReglas;" "ListaReglas→ Regla PC ListaReglas';" "ListaReglas'→ Regla PC ListaReglas'| ep;" "Regla→ LadoIzquierdo FLECHA ListaLadosDerecho;" "LadoIzquierdo→ SIMBOLO;" "ListaLadosDerecho→ LadoDerecho ListaLadosDerecho';" "ListaLadosDerecho'→ OR LadoDerecho ListaLadosDerecho'| ep;" "LadoDerecho→ SIMBOLO LadoDerecho';" "LadoDerecho'→ SIMBOLO LadoDerecho'| ep;"

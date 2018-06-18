@@ -85,7 +85,7 @@ class LR0(object):
 
 	def gramaticaExtendida(self,TablaNodes):
 		salida = []
-		reglaInicial = [str(TablaNodes[0][0]) + "p",str(TablaNodes[0][0])]
+		reglaInicial = [str(TablaNodes[0][0]) + "'",str(TablaNodes[0][0])]
 		salida.append(reglaInicial)
 
 		salida = salida + TablaNodes

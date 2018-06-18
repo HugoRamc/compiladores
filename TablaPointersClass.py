@@ -83,8 +83,9 @@ class TablaPointersClass(object):
 	                TerminalesA.append(Tabla[i][j])
 	    return TerminalesA
 
+	#esta funcion recibe el simbolo, las reglas y los conjuntos de simbolos follow
 	def First(self,NodeTable,NodeTables,Simbs):
-
+		
 	    if NodeTable[0][1] == "ep":
 	        self.Follow(NodeTable[0][0],NodeTables,Simbs)
 	    else:
